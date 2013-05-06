@@ -1,0 +1,78 @@
+name: RCChat
+author: SgtMjrME
+main: me.SgtMjrME.RCChat.RCChat
+version: 0.1
+description: Chat!!
+softdepend: [RCWars, Essentials, RCGuilds]
+
+commands:
+    onlinestaff:
+        description: See online staff (non-vanished)
+    g:
+        description: global
+    l:
+        description: local
+    m:
+        description: mod
+    me:
+        description: All world
+    dc:
+        description: donators
+    rc:
+        description: race chat (requires RCWars)
+    setchannel:
+        description: set others channels
+    chatmute:
+        description: mute players
+    chatunmute:
+        description: unmute players
+    chatdebug:
+        description: see all chat messages
+
+permissions:
+    rcchat.*:
+        children:
+            rcchat.m:
+                description: mod chat
+                default: op
+            rcchat.me:
+                description: all world
+                default: op
+            rcchat.dc:
+                description: donator chat
+                default: op
+            rcchat.g:
+                default: true
+            rcchat.l:
+                default: true
+            rcchat.rc:
+                default: true
+            rcchat.change:
+                description: allows people to change other channels
+                default: op
+            rcchat.rand:
+                default: op
+            rcchat.color:
+                default: op
+            rcchat.specialchar:
+                default: op
+            rcchat.web:
+                default: op
+            rcchat.exempt:
+                description: exempt from spam filter
+                default: op
+            rcchat.mute:
+                description: Allows to mute and unmute players
+                default: op
+            rcchat.msee:
+                default: op
+            rcchat.mesee:
+                default: true
+            rcchat.dcsee:
+                default: true
+            rcchat.gsee:
+                default: true
+            rcchat.lsee:
+                default: true
+            rcchat.rcsee:
+                default: true
