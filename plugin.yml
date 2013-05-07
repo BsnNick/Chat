@@ -1,9 +1,9 @@
 name: RCChat
 author: SgtMjrME
 main: me.SgtMjrME.RCChat
-version: 1.0
+version: 0.9
 description: Chat!!
-softdepend: [RCWars, Essentials, RCGuilds]
+softdepend: [RCWars, Essentials, RCGuilds, Factions]
 
 commands:
     onlinestaff:
@@ -28,7 +28,8 @@ commands:
         description: unmute players
     chatdebug:
         description: see all chat messages
-
+    fc:
+        description: faction chat (Factions)
 permissions:
     rcchat.*:
         children:

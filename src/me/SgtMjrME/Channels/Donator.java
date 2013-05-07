@@ -20,13 +20,13 @@ public class Donator extends BaseChannel {
 	public Donator(RCChat pl) {
 		this.pl = pl;
 		try {
-			cfg.load(pl.getDataFolder().getAbsolutePath() + "/dc.yml");
+			cfg.load(pl.getDataFolder().getAbsolutePath() + "/channels/dc.yml");
 			setName(cfg.getString("name"));
 			setDisp(cfg.getString("disp"));
 			setPermission(cfg.getString("permission"));
 			setColor(ChatColor.valueOf(cfg.getString("chatColor")));
-			setPermErr(cfg.getString("permerr"));
-			setOtherErr(cfg.getString("othererr"));
+			setPermErr(ChatColor.translateAlternateColorCodes('&', cfg.getString("permerr")));
+			setOtherErr(ChatColor.translateAlternateColorCodes('&', cfg.getString("othererr")));
 		} catch (IOException | InvalidConfigurationException e) {
 			e.printStackTrace();
 		}

@@ -20,13 +20,13 @@ public class Local extends BaseChannel {
 	public Local(RCChat pl) {
 		this.pl = pl;
 		try {
-			cfg.load(pl.getDataFolder().getAbsolutePath() + "/l.yml");
+			cfg.load(pl.getDataFolder().getAbsolutePath() + "/channels/l.yml");
 			setName(cfg.getString("name"));
 			setDisp(cfg.getString("disp"));
 			setPermission(cfg.getString("permission"));
 			setColor(ChatColor.valueOf(cfg.getString("chatColor")));
-			setPermErr(cfg.getString("permerr"));
-			setOtherErr(cfg.getString("othererr"));
+			setPermErr(ChatColor.translateAlternateColorCodes('&', cfg.getString("permerr")));
+			setOtherErr(ChatColor.translateAlternateColorCodes('&', cfg.getString("othererr")));
 			d = cfg.getInt("distance");
 		} catch (IOException | InvalidConfigurationException e) {
 			e.printStackTrace();

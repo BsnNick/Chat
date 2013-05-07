@@ -111,13 +111,17 @@ public class RCChat extends JavaPlugin {
 			}
 			return true;
 		}
-		if ((commandLabel.equalsIgnoreCase("g")) && (perm.hasPerm(4))) {
+		if (commandLabel.equalsIgnoreCase("g")) {
 			BaseChannel c = Channel.get("g");
-			if (args.length == 0) {
-				if (!perm.hasPerm(4)) {
-					p.sendMessage(ChatColor.RED + "Cannot set to that mode");
+			if (c == null){
+				p.sendMessage(ChatColor.RED + "Channel not found");
+				return true;
+			}
+			if (!perm.hasPerm(4)) {
+					p.sendMessage(ChatColor.RED + c.getPermErr());
 					return false;
 				}
+			if (args.length == 0) {
 				Channel.pChannels.put(p, c);
 				p.sendMessage(ChatColor.GREEN
 						+ "Chat set to "
@@ -139,13 +143,17 @@ public class RCChat extends JavaPlugin {
 					});
 			return true;
 		}
-		if ((commandLabel.equalsIgnoreCase("l")) && (perm.hasPerm(5))) {
+		if (commandLabel.equalsIgnoreCase("l")) {
 			BaseChannel c = Channel.get("l");
-			if (args.length == 0) {
-				if (!perm.hasPerm(5)) {
-					p.sendMessage(ChatColor.RED + "Cannot set to that mode");
+			if (c == null){
+				p.sendMessage(ChatColor.RED + "Channel not found");
+				return true;
+			}
+			if (!perm.hasPerm(5)) {
+					p.sendMessage(ChatColor.RED + c.getPermErr());
 					return false;
 				}
+			if (args.length == 0) {
 				Channel.pChannels.put(p, c);
 				p.sendMessage(ChatColor.GREEN
 						+ "Chat set to "
@@ -167,13 +175,17 @@ public class RCChat extends JavaPlugin {
 					});
 			return true;
 		}
-		if ((commandLabel.equalsIgnoreCase("dc")) && (perm.hasPerm(3))) {
+		if (commandLabel.equalsIgnoreCase("dc")) {
 			BaseChannel c = Channel.get("dc");
-			if (args.length == 0) {
-				if (!perm.hasPerm(3)) {
-					p.sendMessage(ChatColor.RED + "Cannot set to that mode");
+			if (c == null){
+				p.sendMessage(ChatColor.RED + "Channel not found");
+				return true;
+			}
+			if (!perm.hasPerm(3)) {
+					p.sendMessage(ChatColor.RED + c.getPermErr());
 					return false;
 				}
+			if (args.length == 0) {
 				Channel.pChannels.put(p, c);
 				p.sendMessage(ChatColor.GREEN
 						+ "Chat set to "
@@ -195,13 +207,17 @@ public class RCChat extends JavaPlugin {
 					});
 			return true;
 		}
-		if ((commandLabel.equalsIgnoreCase("me")) && (perm.hasPerm(2))) {
+		if (commandLabel.equalsIgnoreCase("me")) {
 			BaseChannel c = Channel.get("me");
+			if (c == null){
+				p.sendMessage(ChatColor.RED + "Channel not found");
+				return true;
+			}
+			if (!perm.hasPerm(2)) {
+				p.sendMessage(ChatColor.RED + c.getPermErr());
+				return false;
+			}
 			if (args.length == 0) {
-				if (!perm.hasPerm(2)) {
-					p.sendMessage(ChatColor.RED + "Cannot set to that mode");
-					return false;
-				}
 				Channel.pChannels.put(p, c);
 				p.sendMessage(ChatColor.GREEN
 						+ "Chat set to "
@@ -223,13 +239,17 @@ public class RCChat extends JavaPlugin {
 					});
 			return true;
 		}
-		if ((commandLabel.equalsIgnoreCase("m")) && (perm.hasPerm(1))) {
+		if (commandLabel.equalsIgnoreCase("m")) {
 			BaseChannel c = Channel.get("m");
-			if (args.length == 0) {
-				if (!perm.hasPerm(1)) {
-					p.sendMessage(ChatColor.RED + "Cannot set to that mode");
+			if (c == null){
+				p.sendMessage(ChatColor.RED + "Channel not found");
+				return true;
+			}
+			if (!perm.hasPerm(1)) {
+					p.sendMessage(ChatColor.RED + c.getPermErr());
 					return false;
 				}
+			if (args.length == 0) {
 				Channel.pChannels.put(p, c);
 				p.sendMessage(ChatColor.GREEN
 						+ "Chat set to "
@@ -251,18 +271,58 @@ public class RCChat extends JavaPlugin {
 					});
 			return true;
 		}
-		if ((commandLabel.equalsIgnoreCase("rc")) && (perm.hasPerm(6))
-				&& (this.pm.isPluginEnabled("RCWars"))) {
-			if (WarPlayers.getRace(p) == null) {
+		if (commandLabel.equalsIgnoreCase("rc")) {
+			if (!this.pm.isPluginEnabled("RCWars") || 
+					WarPlayers.getRace(p) == null) {
 				p.sendMessage(ChatColor.RED + "You are not in Wars");
 				return false;
 			}
 			BaseChannel c = Channel.get("rc");
-			if (args.length == 0) {
-				if (!perm.hasPerm(6)) {
-					p.sendMessage(ChatColor.RED + "Cannot set to that mode");
+			if (c == null){
+				p.sendMessage(ChatColor.RED + "Channel not found");
+				return true;
+			}
+			if (!perm.hasPerm(6)) {
+					p.sendMessage(ChatColor.RED + c.getPermErr());
 					return false;
 				}
+			if (args.length == 0) {
+				Channel.pChannels.put(p, c);
+				p.sendMessage(ChatColor.GREEN
+						+ "Chat set to "
+						+ ChatColor.translateAlternateColorCodes('&',
+								c.getDisp()));
+				return true;
+			}
+			Channel.tempChannel.put(p, c);
+			Set<Player> nullSetPlayer = new HashSet<Player>();
+			nullSetPlayer.add(p);
+			final AsyncPlayerChatEvent e = new AsyncPlayerChatEvent(true, p,
+					args2str(args), nullSetPlayer);
+			e.setFormat("  %1$s  %2$s");
+			getServer().getScheduler().runTaskAsynchronously(this,
+					new Runnable() {
+						public void run() {
+							RCChat.this.playerListener.onPlayerChat(e);
+						}
+					});
+			return true;
+		}
+		if (commandLabel.equalsIgnoreCase("fc")) {
+			if (!this.pm.isPluginEnabled("Factions")) {
+				p.sendMessage(ChatColor.RED + "You are not in Factions");
+				return false;
+			}
+			BaseChannel c = Channel.get("fc");
+			if (c == null){
+				p.sendMessage(ChatColor.RED + "Channel not found");
+				return true;
+			}
+			if (!perm.hasPerm(20)) {
+					p.sendMessage(ChatColor.RED + c.getPermErr());
+					return false;
+				}
+			if (args.length == 0) {
 				Channel.pChannels.put(p, c);
 				p.sendMessage(ChatColor.GREEN
 						+ "Chat set to "
@@ -546,13 +606,11 @@ public class RCChat extends JavaPlugin {
 							RCChat.this.removeTemp(hold);
 						}
 					}, 1L);
-			format = c.setFormat(hold, format);
 		} else if ((c = pContains(p)) != null) {
-			format = c.setFormat(hold, format);
+			//Nothing atm?
 		} else {
 			addPlayerDefault(p);
 			c = pContains(p);
-			format = c.setFormat(hold, format);
 		}
 		c.sendMessage(p, format, message);
 	}

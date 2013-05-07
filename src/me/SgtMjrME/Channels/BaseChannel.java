@@ -34,7 +34,7 @@ public abstract class BaseChannel {
 		Perm perm = RCChat.permissions.get(p);
 		f = setFormat(p, f);
 		s = setMessage(perm, s);
-		f += s;
+		f = f.replace("%2$s", s);
 		return f;
 	}
 
@@ -53,7 +53,7 @@ public abstract class BaseChannel {
 			for (Player p : Channel.debugPlayers)
 				p.sendMessage(debugMes);
 		}
-		alterMessage(player, format, message);
+		String out = alterMessage(player, format, message);
 		List<Player> debug = new ArrayList<Player>();
 		for (Player p : Channel.debugPlayers)
 			debug.add(p);
@@ -65,7 +65,7 @@ public abstract class BaseChannel {
 				debug.remove(p);
 				continue;
 			}
-			p.sendMessage(message);
+			p.sendMessage(out);
 		}
 		for (Player p : debug) {
 			String debugMes = ChatColor.WHITE + "[RCCD] " + player.getName()
@@ -115,6 +115,7 @@ public abstract class BaseChannel {
 		if (Channel.get("rc") != null && (WarPlayers.getRace(p) != null)) {
 			s = s.replace("%1$s", WarPlayers.getRace(p).getCcolor() + "%1$s"
 					+ getColor());
+			//TODO WHY THE HELL DID I DO THIS
 			String replaceName = "";
 			if (RCChat.e != null) {
 				replaceName = ChatColor.stripColor(RCChat.e.getUserMap()
