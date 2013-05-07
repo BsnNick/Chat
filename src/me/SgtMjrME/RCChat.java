@@ -98,10 +98,14 @@ public class RCChat extends JavaPlugin {
 			return true;
 		Player p = (Player) sender;
 		if (commandLabel.equalsIgnoreCase("onlinestaff")) {
-			for (String s : this.onlineHelpers) {
+			Iterator<String> i = this.onlineHelpers.iterator();
+			while(i.hasNext()){
+				String s = i.next();
 				Player temp = getServer().getPlayer(s);
 				if (temp != null)
 					p.sendMessage(temp.getDisplayName());
+				else
+					i.remove();
 			}
 			return true;
 		}

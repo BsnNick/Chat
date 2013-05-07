@@ -36,6 +36,6 @@ public class Channel {
 	}
 
 	public static void loadChannels(RCChat pl) {
-		channels.put("local", new Local(pl));
+		channels.put("l", new Local(pl));
 	}
 }
