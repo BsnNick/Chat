@@ -6,6 +6,9 @@ import java.util.List;
 
 import me.SgtMjrME.Perm;
 import me.SgtMjrME.RCChat;
+import me.SgtMjrME.RCWars.ClassUpdate.WarRank;
+import me.SgtMjrME.RCWars.Object.WarPlayers;
+import net.realmc.rcguilds.GuildPlayer;
 
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -22,53 +25,57 @@ public abstract class BaseChannel {
 	private String otherErr = "Nobody can hear you :(";
 	YamlConfiguration cfg = new YamlConfiguration();
 
-	//Decides whom the message is going to be sent to
-	//MUST send to receiveDestination, either sync or async
+	// Decides whom the message is going to be sent to
+	// MUST send to receiveDestination, either sync or async
 	abstract void getDestination(final Player p, String format, String message);
-	
-	//Changes the message to include proper formatting
-	String alterMessage(Perm p, String f, String s){
-		f = setFormat(f);
-		s = setMessage(p, s);
+
+	// Changes the message to include proper formatting
+	String alterMessage(Player p, String f, String s) {
+		Perm perm = RCChat.permissions.get(p);
+		f = setFormat(p, f);
+		s = setMessage(perm, s);
 		f += s;
 		return f;
 	}
-	
-	//Continues from getDestination (due to return stuff)
-	void receiveDestination(List<Player> players, Player player, String format, String message){
-		if (players == null){
-			//Some reason it didn't work, I'll assume perms (easier to diagnose)
+
+	// Continues from getDestination (due to return stuff)
+	void receiveDestination(List<Player> players, Player player, String format,
+			String message) {
+		if (players == null) {
+			// Some reason it didn't work, I'll assume perms (easier to
+			// diagnose)
 			player.sendMessage(permErr);
 			return;
-		}
-		else if (players.isEmpty()){
+		} else if (players.isEmpty()) {
 			player.sendMessage(otherErr);
-			String debugMes = ChatColor.WHITE + "[RCCD ERR] " + player.getName() + " " + format
-					+ " " + message;
-			for(Player p : Channel.debugPlayers) p.sendMessage(debugMes);
+			String debugMes = ChatColor.WHITE + "[RCCD ERR] "
+					+ player.getName() + " " + format + " " + message;
+			for (Player p : Channel.debugPlayers)
+				p.sendMessage(debugMes);
 		}
-		alterMessage(RCChat.permissions.get(player), format, message);
+		alterMessage(player, format, message);
 		List<Player> debug = new ArrayList<Player>();
-		for(Player p : Channel.debugPlayers) debug.add(p);
-		for(Player p : players){
-			if (debug.contains(p.getName())){
-				String debugMes = ChatColor.WHITE + "[RCCD] " + player.getName() + " " + format
-						+ " " + message;
+		for (Player p : Channel.debugPlayers)
+			debug.add(p);
+		for (Player p : players) {
+			if (debug.contains(p.getName())) {
+				String debugMes = ChatColor.WHITE + "[RCCD] "
+						+ player.getName() + " " + format + " " + message;
 				p.sendMessage(debugMes);
 				debug.remove(p);
 				continue;
 			}
 			p.sendMessage(message);
 		}
-		for(Player p : debug){
-			String debugMes = ChatColor.WHITE + "[RCCD] " + player.getName() + " " + format
-					+ " " + message;
+		for (Player p : debug) {
+			String debugMes = ChatColor.WHITE + "[RCCD] " + player.getName()
+					+ " " + format + " " + message;
 			p.sendMessage(debugMes);
 		}
 	}
-	
-	//Sends the message out
-	public void sendMessage(Player player, String format, String message){
+
+	// Sends the message out
+	public void sendMessage(Player player, String format, String message) {
 		getDestination(player, format, message);
 	}
 
@@ -104,7 +111,45 @@ public abstract class BaseChannel {
 		this.color = color;
 	}
 
-	public String setFormat(String s) {
+	public String setFormat(Player p, String s) {
+		if (Channel.get("rc") != null && (WarPlayers.getRace(p) != null)) {
+			s = s.replace("%1$s", WarPlayers.getRace(p).getCcolor() + "%1$s"
+					+ getColor());
+			String replaceName = "";
+			if (RCChat.e != null) {
+				replaceName = ChatColor.stripColor(RCChat.e.getUserMap()
+						.getUser(p.getName())._getNickname());
+				if (replaceName == null)
+					replaceName = RCChat.e.getUserMap().getUser(p.getName())
+							.getName();
+				else
+					replaceName = "~" + replaceName;
+			} else {
+				replaceName = ChatColor.stripColor(p.getDisplayName());
+			}
+			if (p.hasPermission("rcchat.m"))
+				s = s.replace("%1$s", WarPlayers.getRace(p)
+						.getDisplay()
+						+ " "
+						+ ChatColor.GOLD
+						+ replaceName
+						+ ' ' + WarRank.getPlayer(p).display());
+			else
+				s = s.replace("%1$s", WarPlayers.getRace(p)
+						.getDisplay()
+						+ " "
+						+ ChatColor.YELLOW
+						+ replaceName
+						+ ' ' + WarRank.getPlayer(p).display());
+		} else if ((RCChat.instance.pm.isPluginEnabled("RCGuilds"))
+				&& (GuildPlayer.getPlayer(p) != null)
+				&& (GuildPlayer.getPlayer(p).getRank() != null)) {
+			s = s.replace("%1$s", p.getDisplayName() + " "
+					+ GuildPlayer.getPlayer(p).getRank().getSuffix() + "&r");
+			s = s.replaceAll("(&([a-f0-9 r]))", "§$2");
+		} else {
+			s = s.replace("%1$s", p.getDisplayName());
+		}
 		String out = ChatColor.translateAlternateColorCodes('&', this.disp)
 				+ ChatColor.RESET + s + this.color;
 		return out;

@@ -1,14 +1,11 @@
 package me.SgtMjrME;
 
 import com.earth2me.essentials.Essentials;
-import com.earth2me.essentials.User;
-import com.earth2me.essentials.UserMap;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
@@ -16,32 +13,24 @@ import java.util.logging.Logger;
 
 import me.SgtMjrME.Channels.BaseChannel;
 import me.SgtMjrME.Channels.Channel;
-import me.SgtMjrME.RCWars.ClassUpdate.WarRank;
-import me.SgtMjrME.RCWars.Object.Race;
 import me.SgtMjrME.RCWars.Object.WarPlayers;
-import net.realmc.rcguilds.GuildPlayer;
-import net.realmc.rcguilds.GuildRank;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Server;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitScheduler;
 
 public class RCChat extends JavaPlugin {
-	//static public RCChat instance;
+	static public RCChat instance;
 	private static ArrayList<String> webVal = new ArrayList<String>();
 	private Logger log;
-	Essentials e;
-	private PluginManager pm;
+	public static Essentials e;
+	public PluginManager pm;
 	static public ConcurrentHashMap<Player, Perm> permissions = new ConcurrentHashMap<Player, Perm>();
 	private double time;
 	private BaseChannel defaultChannel;
@@ -49,12 +38,13 @@ public class RCChat extends JavaPlugin {
 	public HashSet<String> onlineHelpers = new HashSet<String>();
 
 	public void onEnable() {
+		instance = this;
 		this.log = getServer().getLogger();
 		this.pm = getServer().getPluginManager();
-		this.e = null;
+		RCChat.e = null;
 		if (this.pm.isPluginEnabled("Essentials")) {
-			this.e = ((Essentials) this.pm.getPlugin("Essentials"));
-			if (this.e != null)
+			RCChat.e = ((Essentials) this.pm.getPlugin("Essentials"));
+			if (RCChat.e != null)
 				this.log.info("Essentials Loaded into RCChat");
 			else
 				this.log.warning("Essentials not loaded");
@@ -556,13 +546,13 @@ public class RCChat extends JavaPlugin {
 							RCChat.this.removeTemp(hold);
 						}
 					}, 1L);
-			format = c.setFormat(format);
+			format = c.setFormat(hold, format);
 		} else if ((c = pContains(p)) != null) {
-			format = c.setFormat(format);
+			format = c.setFormat(hold, format);
 		} else {
 			addPlayerDefault(p);
 			c = pContains(p);
-			format = c.setFormat(format);
+			format = c.setFormat(hold, format);
 		}
 		c.sendMessage(p, format, message);
 	}

@@ -84,7 +84,7 @@ public class PlayerListener implements Listener {
 		}
 		if (!e.getPlayer().hasPermission("rcchat.m"))
 			return;
-		if (this.pl.e.getVanishedPlayers().contains(e.getPlayer().getName()))
+		if (RCChat.e.getVanishedPlayers().contains(e.getPlayer().getName()))
 			this.pl.onlineHelpers.add(e.getPlayer().getName());
 		else
 			this.pl.onlineHelpers.remove(e.getPlayer().getName());

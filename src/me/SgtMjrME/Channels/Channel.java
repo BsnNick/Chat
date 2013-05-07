@@ -36,6 +36,16 @@ public class Channel {
 	}
 
 	public static void loadChannels(RCChat pl) {
-		channels.put("l", new Local(pl));
+		channels.putIfAbsent("l", new Local(pl));
+		channels.putIfAbsent("g", new Global(pl));
+		channels.putIfAbsent("dc", new Donator(pl));
+		channels.putIfAbsent("m", new Mod(pl));
+		channels.putIfAbsent("me", new Me(pl));
+		if (pl.getServer().getPluginManager().isPluginEnabled("Factions")){
+			channels.putIfAbsent("fc", new FactionChat(pl));
+		}
+		if (pl.getServer().getPluginManager().isPluginEnabled("RCWars")){
+			channels.putIfAbsent("rc", new RaceChat(pl));
+		}
 	}
 }

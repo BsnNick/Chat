@@ -6,5 +6,6 @@
 	<classpathentry kind="lib" path="C:/Minecraft/plugins/RCGuilds.jar"/>
 	<classpathentry kind="lib" path="C:/Minecraft/plugins/RCWars.jar"/>
 	<classpathentry kind="lib" path="C:/Minecraft/server/plugins/Essentials.jar"/>
+	<classpathentry kind="lib" path="C:/Minecraft/plugins/Factions.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
