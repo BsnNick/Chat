@@ -7,13 +7,12 @@ import me.SgtMjrME.Channels.Channel;
 import me.SgtMjrME.Channels.Mod;
 
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.messaging.PluginMessageListener;
 
 public class ChatClientComm implements PluginMessageListener {
-	private JavaPlugin plugin;
+	private RCChat plugin;
 	
-	public ChatClientComm(JavaPlugin p){
+	public ChatClientComm(RCChat p){
 		plugin = p;
 	}
 	
@@ -26,7 +25,7 @@ public class ChatClientComm implements PluginMessageListener {
     	String pktType = strMsg.substring(0,8);
     	pktType = pktType.trim();
     	if (pktType.equals("channels")){ //Just a list of channels
-    		rcsPacket pkt = new rcsPacket(channel, plugin, "RCChat", p);
+    		rcsPacket pkt = new rcsPacket(channel, plugin.channelName, , p);
     		
     		pkt.writeInt(Channel.channels.size());
     		for (Iterator<String> iter = Channel.channels.keySet().iterator(); iter.hasNext();){
