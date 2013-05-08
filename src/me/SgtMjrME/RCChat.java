@@ -38,7 +38,7 @@ public class RCChat extends JavaPlugin {
 	private BaseChannel defaultChannel;
 	private PlayerListener playerListener;
 	public HashSet<String> onlineHelpers = new HashSet<String>();
-	private final String channelName="RCChat";
+	public final String channelName="RCChat";
 
 	public void onEnable() {
 		instance = this;
