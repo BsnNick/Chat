@@ -14,6 +14,10 @@ import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
+import com.massivecraft.factions.FPlayer;
+import com.massivecraft.factions.FPlayers;
+import com.massivecraft.factions.Faction;
+
 public abstract class BaseChannel {
 
 	private String name;
@@ -147,9 +151,18 @@ public abstract class BaseChannel {
 				&& (GuildPlayer.getPlayer(p).getRank() != null)) {
 			s = s.replace("%1$s", p.getDisplayName() + " "
 					+ GuildPlayer.getPlayer(p).getRank().getSuffix() + "&r");
-			s = s.replaceAll("(&([a-f0-9 r]))", "ยง$2");
+			s = s.replaceAll("(&([a-f0-9 r]))", "ง$2");
 		} else {
 			s = s.replace("%1$s", p.getDisplayName());
+		}
+		if (Channel.get("fc") != null){
+			FPlayer fp = FPlayers.i.get(p);
+			if (fp != null){
+				Faction f = fp.getFaction();
+				if (f != null){
+					s = f.getTag(fp) + s;
+				}
+			}
 		}
 		String out = ChatColor.translateAlternateColorCodes('&', this.disp)
 				+ ChatColor.RESET + s + this.color;
