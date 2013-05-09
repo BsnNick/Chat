@@ -1,6 +1,7 @@
 package me.SgtMjrME;
 
 import com.earth2me.essentials.Essentials;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ import me.SgtMjrME.Channels.BaseChannel;
 import me.SgtMjrME.Channels.Channel;
 import me.SgtMjrME.RCWars.Object.WarPlayers;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -36,6 +38,7 @@ public class RCChat extends JavaPlugin {
 	private BaseChannel defaultChannel;
 	private PlayerListener playerListener;
 	public HashSet<String> onlineHelpers = new HashSet<String>();
+	public final String channelName="RCChat";
 
 	public void onEnable() {
 		instance = this;
@@ -78,6 +81,12 @@ public class RCChat extends JavaPlugin {
 				webVal.add(s2);
 			}
 		}
+		//This informs Bukkit that you will send messages through that channel
+		Bukkit.getMessenger().registerOutgoingPluginChannel(this, channelName);
+		
+		//This informs Bukkit that you want to receive messages through that channel, to myPluginMessageListener
+		Bukkit.getMessenger().registerIncomingPluginChannel(this, channelName, new ChatClientComm(this));
+		
 		this.playerListener = new PlayerListener(this);
 		this.pm.registerEvents(this.playerListener, this);
 	}
