@@ -160,7 +160,7 @@ public abstract class BaseChannel {
 			if (fp != null){
 				Faction f = fp.getFaction();
 				if (f != null){
-					s = f.getTag(fp) + s;
+					s = fp.getTag() + s;
 				}
 			}
 		}
