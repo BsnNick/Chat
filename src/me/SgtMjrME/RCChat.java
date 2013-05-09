@@ -591,7 +591,7 @@ public class RCChat extends JavaPlugin {
 	}
 
 	public void fromRunnable(Player p, String format, String message) {
-		if ((isMuted(p) != null) && (isMuted(p).booleanValue()))
+		if ((isMuted(p) != null) && isMuted(p))
 			return;
 		Perm perm = (Perm) RCChat.getPerm(p);
 		if (perm == null) {

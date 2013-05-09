@@ -48,6 +48,8 @@ permissions:
                 default: true
             rcchat.rc:
                 default: true
+            rcchat.fc:
+                default: true
             rcchat.change:
                 description: allows people to change other channels
                 default: op
@@ -76,4 +78,6 @@ permissions:
             rcchat.lsee:
                 default: true
             rcchat.rcsee:
+                default: true
+            rcchat.fcsee:
                 default: true
