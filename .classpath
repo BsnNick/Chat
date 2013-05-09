@@ -2,10 +2,10 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
-	<classpathentry kind="lib" path="C:/Minecraft/plugins/bukkit-1.5.1-R0.2.jar"/>
-	<classpathentry kind="lib" path="C:/Minecraft/plugins/RCGuilds.jar"/>
-	<classpathentry kind="lib" path="C:/Minecraft/plugins/RCWars.jar"/>
-	<classpathentry kind="lib" path="C:/Minecraft/server/plugins/Essentials.jar"/>
-	<classpathentry kind="lib" path="C:/Minecraft/plugins/Factions.jar"/>
+	<classpathentry kind="lib" path="E:/Programming/Minecraft/Dependancies/bukkit-1.5.1-R0.2.jar"/>
+	<classpathentry kind="lib" path="E:/Programming/Minecraft/Dependancies/RCGuilds.jar"/>
+	<classpathentry kind="lib" path="E:/Programming/Minecraft/Dependancies/RCWars.jar"/>
+	<classpathentry kind="lib" path="E:/Programming/Minecraft/Dependancies/Factions.jar"/>
+	<classpathentry kind="lib" path="E:/Programming/Minecraft/Dependancies/Essentials.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

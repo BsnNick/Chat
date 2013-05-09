@@ -60,6 +60,7 @@ public class Local extends BaseChannel {
 							Player other = (Player) e;
 							if (RCChat.permissions.get(other).hasPerm(18)) out.add(other);
 						}
+						if (RCChat.permissions.get(p).hasPerm(18)) out.add(p);
 						receiveDestination(out, p, format, message);
 					}
 				});
