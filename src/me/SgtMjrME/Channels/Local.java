@@ -39,7 +39,7 @@ public class Local extends BaseChannel {
 		//This one has to be done sync'd, due to getNearbyEntities
 		
 		//First, check if player has perms
-		Perm perm = RCChat.permissions.get(p);
+		Perm perm = RCChat.getPerm(p);
 		if (!perm.hasPerm(5)){
 			p.sendMessage(getPermErr());
 			return;
@@ -58,9 +58,9 @@ public class Local extends BaseChannel {
 						for(Entity e : ent){
 							if (!(e instanceof Player)) continue;
 							Player other = (Player) e;
-							if (RCChat.permissions.get(other).hasPerm(18)) out.add(other);
+							if (RCChat.getPerm(other).hasPerm(18)) out.add(other);
 						}
-						if (RCChat.permissions.get(p).hasPerm(18)) out.add(p);
+						if (RCChat.getPerm(p).hasPerm(18)) out.add(p);
 						receiveDestination(out, p, format, message);
 					}
 				});

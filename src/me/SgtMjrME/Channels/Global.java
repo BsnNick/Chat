@@ -34,7 +34,7 @@ public class Global extends BaseChannel {
 	@Override
 	void getDestination(Player p, String format, String message) {
 		// First, check if player has perms
-		Perm perm = RCChat.permissions.get(p);
+		Perm perm = RCChat.getPerm(p);
 		if (!perm.hasPerm(4)) {
 			p.sendMessage(getPermErr());
 			return;
@@ -47,7 +47,7 @@ public class Global extends BaseChannel {
 		List<Player> players = new ArrayList<Player>(p.getWorld().getPlayers());
 		Iterator<Player> i = players.iterator();
 		while(i.hasNext()){
-			if (!RCChat.permissions.get(i.next()).hasPerm(17))
+			if (!RCChat.getPerm(i.next()).hasPerm(17))
 				i.remove();
 		}
 		receiveDestination(players, p, format, message);

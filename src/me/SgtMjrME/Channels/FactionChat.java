@@ -37,7 +37,7 @@ public class FactionChat extends BaseChannel {
 	@Override
 	void getDestination(Player p, String format, String message) {
 		// First, check if player has perms
-		Perm perm = RCChat.permissions.get(p);
+		Perm perm = RCChat.getPerm(p);
 		if (!perm.hasPerm(20)) {
 			p.sendMessage(getPermErr());
 			return;
@@ -55,7 +55,7 @@ public class FactionChat extends BaseChannel {
 		// Remove non-permission
 		Iterator<Player> i = players.iterator();
 		while (i.hasNext()) {
-			if (!RCChat.permissions.get(i.next()).hasPerm(21))
+			if (!RCChat.getPerm(i.next()).hasPerm(21))
 				i.remove();
 		}
 		// send

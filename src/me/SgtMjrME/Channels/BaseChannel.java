@@ -16,7 +16,6 @@ import org.bukkit.entity.Player;
 
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
-import com.massivecraft.factions.Faction;
 
 public abstract class BaseChannel {
 
@@ -35,7 +34,7 @@ public abstract class BaseChannel {
 
 	// Changes the message to include proper formatting
 	String alterMessage(Player p, String f, String s) {
-		Perm perm = RCChat.permissions.get(p);
+		Perm perm = RCChat.getPerm(p);
 		f = setFormat(p, f);
 		s = setMessage(perm, s);
 		f = f.replace("%2$s", s);
@@ -158,8 +157,7 @@ public abstract class BaseChannel {
 		if (Channel.get("fc") != null){
 			FPlayer fp = FPlayers.i.get(p);
 			if (fp != null){
-				Faction f = fp.getFaction();
-				if (f != null){
+				if (fp.hasFaction()){
 					s = fp.getTag() + s;
 				}
 			}

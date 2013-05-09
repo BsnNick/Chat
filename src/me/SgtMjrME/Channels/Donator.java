@@ -35,7 +35,7 @@ public class Donator extends BaseChannel {
 	@Override
 	void getDestination(Player p, String format, String message) {
 		// First, check if player has perms
-		Perm perm = RCChat.permissions.get(p);
+		Perm perm = RCChat.getPerm(p);
 		if (!perm.hasPerm(3)) {
 			p.sendMessage(getPermErr());
 			return;
@@ -48,7 +48,7 @@ public class Donator extends BaseChannel {
 		// Remove non-permission
 		Iterator<Player> i = players.iterator();
 		while (i.hasNext()) {
-			if (!RCChat.permissions.get(i.next()).hasPerm(17))
+			if (!RCChat.getPerm(i.next()).hasPerm(17))
 				i.remove();
 		}
 		// send

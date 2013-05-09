@@ -36,7 +36,7 @@ public class RaceChat extends BaseChannel {
 	@Override
 	void getDestination(Player p, String format, String message) {
 		// First, check if player has perms
-		Perm perm = RCChat.permissions.get(p);
+		Perm perm = RCChat.getPerm(p);
 		if (!perm.hasPerm(6)) {
 			p.sendMessage(getPermErr());
 			return;
@@ -57,7 +57,7 @@ public class RaceChat extends BaseChannel {
 			if (player != null) {
 				r = WarPlayers.getRace(player);
 				if (r.equals(WarPlayers.getRace(p))
-						&& RCChat.permissions.get(player).hasPerm(19))
+						&& RCChat.getPerm(player).hasPerm(19))
 					players.add(player);
 			}
 			else it.remove();

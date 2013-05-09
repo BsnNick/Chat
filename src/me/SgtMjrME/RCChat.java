@@ -108,7 +108,7 @@ public class RCChat extends JavaPlugin {
 			}
 			return true;
 		}
-		Perm perm = (Perm) RCChat.permissions.get(p);
+		Perm perm = (Perm) RCChat.getPerm(p);
 		if ((commandLabel.equalsIgnoreCase("chatdebug")) && (perm.hasPerm(2))) {
 			if (Channel.debugPlayers.contains(p)){
 				p.sendMessage("Removing chat sight");
@@ -593,7 +593,7 @@ public class RCChat extends JavaPlugin {
 	public void fromRunnable(Player p, String format, String message) {
 		if ((isMuted(p) != null) && (isMuted(p).booleanValue()))
 			return;
-		Perm perm = (Perm) RCChat.permissions.get(p);
+		Perm perm = (Perm) RCChat.getPerm(p);
 		if (perm == null) {
 			RCChat.permissions.put(p, new Perm(p));
 			perm = (Perm) RCChat.permissions.get(p);
@@ -626,5 +626,12 @@ public class RCChat extends JavaPlugin {
 
 	public static ArrayList<String> getWeb() {
 		return webVal;
+	}
+	
+	public static Perm getPerm(Player p){
+		if (permissions.contains(p)) return permissions.get(p);
+		Perm newperm = new Perm(p);
+		permissions.putIfAbsent(p, newperm);
+		return newperm;
 	}
 }
