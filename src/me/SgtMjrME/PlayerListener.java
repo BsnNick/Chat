@@ -5,15 +5,15 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.event.player.PlayerChatEvent;
+//import org.bukkit.event.player.PlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
-import org.bukkit.plugin.Plugin;
+//import org.bukkit.plugin.Plugin;
 
-@SuppressWarnings("deprecation")
+//@SuppressWarnings("deprecation")
 public class PlayerListener implements Listener {
 	private final RCChat pl;
 
@@ -43,13 +43,13 @@ public class PlayerListener implements Listener {
 		this.pl.fromRunnable(e.getPlayer(), e.getFormat(), e.getMessage());
 	}
 
-	@EventHandler(priority = EventPriority.LOWEST)
-	public void onPlayerOldChat(PlayerChatEvent e) {
-		for (Plugin p : this.pl.getServer().getPluginManager().getPlugins()) {
-			PlayerChatEvent.getHandlerList().unregister(p);
-		}
-		e.setCancelled(true);
-	}
+//	@EventHandler(priority = EventPriority.LOWEST)
+//	public void onPlayerOldChat(PlayerChatEvent e) {
+//		for (Plugin p : this.pl.getServer().getPluginManager().getPlugins()) {
+//			PlayerChatEvent.getHandlerList().unregister(p);
+//		}
+//		e.setCancelled(true);
+//	}
 
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onPlayerKick(PlayerKickEvent e) {

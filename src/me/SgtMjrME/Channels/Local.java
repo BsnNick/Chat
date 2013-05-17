@@ -7,6 +7,7 @@ import java.util.List;
 import me.SgtMjrME.Perm;
 import me.SgtMjrME.RCChat;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.entity.Entity;
@@ -25,8 +26,10 @@ public class Local extends BaseChannel {
 			setDisp(cfg.getString("disp"));
 			setPermission(cfg.getString("permission"));
 			setColor(ChatColor.valueOf(cfg.getString("chatColor")));
-			setPermErr(ChatColor.translateAlternateColorCodes('&', cfg.getString("permerr")));
-			setOtherErr(ChatColor.translateAlternateColorCodes('&', cfg.getString("othererr")));
+			setPermErr(ChatColor.translateAlternateColorCodes('&',
+					cfg.getString("permerr")));
+			setOtherErr(ChatColor.translateAlternateColorCodes('&',
+					cfg.getString("othererr")));
 			d = cfg.getInt("distance");
 		} catch (IOException | InvalidConfigurationException e) {
 			e.printStackTrace();
@@ -35,35 +38,51 @@ public class Local extends BaseChannel {
 	}
 
 	@Override
-	void getDestination(final Player p, final String format, final String message) {
-		//This one has to be done sync'd, due to getNearbyEntities
-		
-		//First, check if player has perms
+	void getDestination(final Player p, final String format,
+			final String message) {
+		// This one has to be done sync'd, due to getNearbyEntities
+
+		// First, check if player has perms
 		Perm perm = RCChat.getPerm(p);
-		if (!perm.hasPerm(5)){
+		if (!perm.hasPerm(5)) {
 			p.sendMessage(getPermErr());
 			return;
 		}
-		
-		//Start location
-		//Nested run's... how fun
+
+		// Start location
+		// Nested run's... how fun
 		pl.getServer().getScheduler().runTask(pl, new Runnable() {
 			@Override
 			public void run() {
 				final List<Entity> ent = p.getNearbyEntities(d, d, d);
-				pl.getServer().getScheduler().runTaskAsynchronously(pl, new Runnable(){
-					@Override
-					public void run() {
-						List<Player> out = new ArrayList<Player>();
-						for(Entity e : ent){
-							if (!(e instanceof Player)) continue;
-							Player other = (Player) e;
-							if (RCChat.getPerm(other).hasPerm(18)) out.add(other);
-						}
-						if (RCChat.getPerm(p).hasPerm(18)) out.add(p);
-						receiveDestination(out, p, format, message);
-					}
-				});
+				pl.getServer().getScheduler()
+						.runTaskAsynchronously(pl, new Runnable() {
+							@Override
+							public void run() {
+								List<Player> out = new ArrayList<Player>();
+								for (Entity e : ent) {
+									if (e == null)
+										continue;
+									if (!(e instanceof Player))
+										continue;
+									Player other = (Player) e;
+									Perm perm = RCChat.getPerm(other);
+									if (perm != null && perm.hasPerm(18))
+										out.add(other);
+									else if (perm == null) {
+										Bukkit.getLogger()
+												.warning(
+														"RCCHAT encountered an error, " +
+														"null permissions, " +
+														"that could not be resolved.  Failing safetly");
+									}
+								}
+								Perm perm = RCChat.getPerm(p);
+								if (perm != null && perm.hasPerm(18))
+									out.add(p);
+								receiveDestination(out, p, format, message);
+							}
+						});
 			}
 		});
 	}

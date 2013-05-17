@@ -1,7 +1,7 @@
 name: RCChat
 author: SgtMjrME
 main: me.SgtMjrME.RCChat
-version: 0.9
+version: 1.1
 description: Chat!!
 softdepend: [RCWars, Essentials, RCGuilds, Factions]
 
@@ -30,6 +30,7 @@ commands:
         description: see all chat messages
     fc:
         description: faction chat (Factions)
+    chatperms:
 permissions:
     rcchat.*:
         children:
@@ -80,4 +81,6 @@ permissions:
             rcchat.rcsee:
                 default: true
             rcchat.fcsee:
+                default: true
+            rcchat.seeperms:
                 default: true

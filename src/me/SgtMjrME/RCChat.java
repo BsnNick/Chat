@@ -407,6 +407,23 @@ public class RCChat extends JavaPlugin {
 				return true;
 			}
 		}
+		if (commandLabel.equalsIgnoreCase("chatperms") && p.hasPermission("rcchat.seeperms")){
+			if (args.length == 0) 
+				perm.displayPerms(p);
+			else if (p.hasPermission("rcchat.me") && args.length > 0) {
+				try{
+					Perm otherperm = getPerm(Bukkit.getPlayer(args[0]));
+					if (otherperm == null){
+						p.sendMessage("Player not found");
+						return true;
+					}
+					otherperm.displayPerms(p);
+				}
+				catch (Exception e){
+					p.sendMessage("Player not found");
+				}
+			}
+		}
 		return true;
 	}
 
@@ -586,12 +603,14 @@ public class RCChat extends JavaPlugin {
 		Channel.pChannels.put(p, c);
 	}
 
+	@Deprecated
 	public Boolean isMuted(Player p) {
-		return Channel.muted.get(p);
+		return false;
+//		return Channel.muted.get(p);
 	}
 
 	public void fromRunnable(Player p, String format, String message) {
-		if ((isMuted(p) != null) && isMuted(p))
+		if (isMuted(p))
 			return;
 		Perm perm = (Perm) RCChat.getPerm(p);
 		if (perm == null) {
@@ -601,11 +620,12 @@ public class RCChat extends JavaPlugin {
 		if (!perm.hasPerm(12)) {
 			if ((Channel.delay.get(p) != null)
 					&& ((System.currentTimeMillis() - Channel.delay.get(p))
-							/ 1000L < this.time))
+							/ 1000L < this.time)){
+				System.out.println("Player " + p.getName() + " is spamming RCChat");
 				return;
+			}
 			Channel.delay.put(p, System.currentTimeMillis());
 		}
-
 		final Player hold = p;
 		BaseChannel c;
 		if ((c = tempContains(p)) != null) {
@@ -616,7 +636,7 @@ public class RCChat extends JavaPlugin {
 						}
 					}, 1L);
 		} else if ((c = pContains(p)) != null) {
-			//Nothing atm?
+			//Nothing atm? It already set the channel
 		} else {
 			addPlayerDefault(p);
 			c = pContains(p);
@@ -629,9 +649,10 @@ public class RCChat extends JavaPlugin {
 	}
 	
 	public static Perm getPerm(Player p){
+		if (p == null) return null;
 		if (permissions.contains(p)) return permissions.get(p);
 		Perm newperm = new Perm(p);
-		permissions.putIfAbsent(p, newperm);
+		permissions.put(p, newperm);
 		return newperm;
 	}
 }
