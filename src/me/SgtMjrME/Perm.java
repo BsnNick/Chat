@@ -32,6 +32,8 @@ public class Perm {
 		this.perms.add(p.hasPermission("rcchat.rcsee"));// 19
 		this.perms.add(p.hasPermission("rcchat.fc"));// 20
 		this.perms.add(p.hasPermission("rcchat.fcsee"));// 21
+		this.perms.add(p.hasPermission("rcchat.tc"));// 22
+		this.perms.add(p.hasPermission("rcchat.tcsee"));// 23
 	}
 
 	public boolean hasPerm(int i) {

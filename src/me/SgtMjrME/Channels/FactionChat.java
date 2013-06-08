@@ -29,6 +29,7 @@ public class FactionChat extends BaseChannel {
 			setColor(ChatColor.valueOf(cfg.getString("chatColor")));
 			setPermErr(ChatColor.translateAlternateColorCodes('&', cfg.getString("permerr")));
 			setOtherErr(ChatColor.translateAlternateColorCodes('&', cfg.getString("othererr")));
+			setTag(true);
 		} catch (IOException | InvalidConfigurationException e) {
 			e.printStackTrace();
 		}

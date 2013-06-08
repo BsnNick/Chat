@@ -31,6 +31,7 @@ public class Local extends BaseChannel {
 			setOtherErr(ChatColor.translateAlternateColorCodes('&',
 					cfg.getString("othererr")));
 			d = cfg.getInt("distance");
+			setTag(true);
 		} catch (IOException | InvalidConfigurationException e) {
 			e.printStackTrace();
 		}

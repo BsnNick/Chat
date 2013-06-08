@@ -8,7 +8,6 @@ import me.SgtMjrME.Perm;
 import me.SgtMjrME.RCChat;
 import me.SgtMjrME.RCWars.ClassUpdate.WarRank;
 import me.SgtMjrME.RCWars.Object.WarPlayers;
-import net.realmc.rcguilds.GuildPlayer;
 
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -16,6 +15,9 @@ import org.bukkit.entity.Player;
 
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
+import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
+import com.palmergames.bukkit.towny.object.Town;
+import com.palmergames.bukkit.towny.object.TownyUniverse;
 
 public abstract class BaseChannel {
 
@@ -27,6 +29,9 @@ public abstract class BaseChannel {
 	private String permErr = "You do not have proper permissions";
 	private String otherErr = "Nobody can hear you :(";
 	YamlConfiguration cfg = new YamlConfiguration();
+	private boolean useTag = false;
+	
+	void setTag(boolean i){useTag = i;}
 
 	// Decides whom the message is going to be sent to
 	// MUST send to receiveDestination, either sync or async
@@ -145,23 +150,52 @@ public abstract class BaseChannel {
 						+ ChatColor.YELLOW
 						+ replaceName
 						+ ' ' + WarRank.getPlayer(p).display());
-		} else if ((RCChat.instance.pm.isPluginEnabled("RCGuilds"))
-				&& (GuildPlayer.getPlayer(p) != null)
-				&& (GuildPlayer.getPlayer(p).getRank() != null)) {
-			s = s.replace("%1$s", p.getDisplayName() + " "
-					+ GuildPlayer.getPlayer(p).getRank().getSuffix() + "&r");
-			s = s.replaceAll("(&([a-f0-9 r]))", "§$2");
+//		} else if ((RCChat.instance.pm.isPluginEnabled("RCGuilds"))
+//				&& (GuildPlayer.getPlayer(p) != null)
+//				&& (GuildPlayer.getPlayer(p).getRank() != null)) {
+//			s = s.replace("%1$s", p.getDisplayName() + " "
+//					+ GuildPlayer.getPlayer(p).getRank().getSuffix() + "&r");
+//			s = s.replaceAll("(&([a-f0-9 r]))", "§$2");
 		} else {
 			s = s.replace("%1$s", p.getDisplayName());
 		}
-		if (Channel.get("fc") != null){
+		if (RCChat.factionWorld != null && p.getWorld().equals(RCChat.factionWorld) && 
+				useTag){
 			FPlayer fp = FPlayers.i.get(p);
 			if (fp != null){
-				if (fp.hasFaction()){
-					s = fp.getTag() + s;
-				}
+				if (fp.hasFaction()) s = fp.getTag() + s;
 			}
 		}
+		else if (RCChat.townyWorld != null && p.getWorld().equals(RCChat.townyWorld) && useTag){
+			try {
+				Town t = TownyUniverse.getDataSource().getResident(p.getName()).getTown();
+				if (t != null){ //more for fun than anything
+					s = RCChat.townyTag.replace("%TOWN%", t.getName());
+				}
+			} catch (NotRegisteredException e) {
+				p.sendMessage(ChatColor.RED + "Error locating town information, contact RJ with relevant details");
+			}
+		}
+//		if (Channel.get("fc") != null){
+//			if (RCChat.factionWorld != null){
+//				FPlayer fp = FPlayers.i.get(p);
+//				if (fp != null){
+//					if (fp.hasFaction() && p.getWorld().equals(RCChat.factionWorld)){
+//						s = fp.getTag() + s;
+//					}
+//				}
+//			}
+//		}
+//		if (Channel.get("tc") != null){
+//			if (RCChat.townyWorld != null){
+//				FPlayer fp = FPlayers.i.get(p);
+//				if (fp != null){
+//					if (fp.hasFaction() && p.getWorld().equals(RCChat.factionWorld)){
+//						s = fp.getTag() + s;
+//					}
+//				}
+//			}
+//		}
 		String out = ChatColor.translateAlternateColorCodes('&', this.disp)
 				+ ChatColor.RESET + s + this.color;
 		return out;

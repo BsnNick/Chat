@@ -18,6 +18,7 @@ import me.SgtMjrME.RCWars.Object.WarPlayers;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -34,11 +35,14 @@ public class RCChat extends JavaPlugin {
 	public static Essentials e;
 	public PluginManager pm;
 	static public ConcurrentHashMap<Player, Perm> permissions = new ConcurrentHashMap<Player, Perm>();
+	public static World factionWorld;
+	public static World townyWorld;
 	private double time;
 	private BaseChannel defaultChannel;
 	private PlayerListener playerListener;
 	public HashSet<String> onlineHelpers = new HashSet<String>();
 	public final String channelName="RCChat";
+	public static String townyTag;
 
 	public void onEnable() {
 		instance = this;
@@ -80,6 +84,18 @@ public class RCChat extends JavaPlugin {
 			for (String s2 : s1) {
 				webVal.add(s2);
 			}
+		}
+		s = config.getString("factions");
+		if (s != null){
+			factionWorld = getServer().getWorld(s);
+		}
+		s = config.getString("towny");
+		if (s != null){
+			townyWorld = getServer().getWorld(s);
+		}
+		s = config.getString("townyTag");
+		if (s != null){
+			townyTag = ChatColor.translateAlternateColorCodes('&', s);
 		}
 		//This informs Bukkit that you will send messages through that channel
 		Bukkit.getMessenger().registerOutgoingPluginChannel(this, channelName);
