@@ -30,6 +30,8 @@ commands:
         description: see all chat messages
     fc:
         description: faction chat (Factions)
+    twc:
+        description: towny chat
     chatperms:
 permissions:
     rcchat.*:
@@ -50,6 +52,8 @@ permissions:
             rcchat.rc:
                 default: true
             rcchat.fc:
+                default: true
+            rcchat.tc:
                 default: true
             rcchat.change:
                 description: allows people to change other channels
@@ -83,4 +87,6 @@ permissions:
             rcchat.fcsee:
                 default: true
             rcchat.seeperms:
+                default: true
+            rcchat.tcsee:
                 default: true
