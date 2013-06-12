@@ -21,7 +21,7 @@ public class TownyChat extends BaseChannel {
 	public TownyChat(RCChat pl) {
 		this.pl = pl;
 		try {
-			cfg.load(pl.getDataFolder().getAbsolutePath() + "/channels/tc.yml");
+			cfg.load(pl.getDataFolder().getAbsolutePath() + "/channels/twc.yml");
 			setName(cfg.getString("name"));
 			setDisp(cfg.getString("disp"));
 			setPermission(cfg.getString("permission"));

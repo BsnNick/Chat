@@ -170,10 +170,10 @@ public abstract class BaseChannel {
 			try {
 				Town t = TownyUniverse.getDataSource().getResident(p.getName()).getTown();
 				if (t != null){ //more for fun than anything
-					s = RCChat.townyTag.replace("%TOWN%", t.getName());
+					s = RCChat.townyTag.replace("%TOWN%", t.getName()) + s;
 				}
 			} catch (NotRegisteredException e) {
-				p.sendMessage(ChatColor.RED + "Error locating town information, contact RJ with relevant details");
+				//No town found... I'm fine with that really
 			}
 		}
 //		if (Channel.get("fc") != null){
