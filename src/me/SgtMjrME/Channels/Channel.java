@@ -48,7 +48,10 @@ public class Channel {
 			channels.putIfAbsent("rc", new RaceChat(pl));
 		}
 		if (pl.getServer().getPluginManager().isPluginEnabled("Towny")){
-			channels.putIfAbsent("twc", new TownyChat(pl));
+			try{channels.putIfAbsent("twc", new TownyChat(pl));
+			} catch(Exception e){
+				//nothing
+			}
 		}
 	}
 }

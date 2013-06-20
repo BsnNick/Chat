@@ -405,6 +405,42 @@ public class RCChat extends JavaPlugin {
 					});
 			return true;
 		}
+		if (commandLabel.equalsIgnoreCase("nc")) {
+			if (!this.pm.isPluginEnabled("Towny")) {
+				p.sendMessage(ChatColor.RED + "You are not in the Survival server");
+				return false;
+			}
+			BaseChannel c = Channel.get("nc");
+			if (c == null){
+				p.sendMessage(ChatColor.RED + "Channel not found");
+				return true;
+			}
+			if (!perm.hasPerm(22)) {
+					p.sendMessage(ChatColor.RED + c.getPermErr());
+					return false;
+				}
+			if (args.length == 0) {
+				Channel.pChannels.put(p, c);
+				p.sendMessage(ChatColor.GREEN
+						+ "Chat set to "
+						+ ChatColor.translateAlternateColorCodes('&',
+								c.getDisp()));
+				return true;
+			}
+			Channel.tempChannel.put(p, c);
+			Set<Player> nullSetPlayer = new HashSet<Player>();
+			nullSetPlayer.add(p);
+			final AsyncPlayerChatEvent e = new AsyncPlayerChatEvent(true, p,
+					args2str(args), nullSetPlayer);
+			e.setFormat("  %1$s  %2$s");
+			getServer().getScheduler().runTaskAsynchronously(this,
+					new Runnable() {
+						public void run() {
+							RCChat.this.playerListener.onPlayerChat(e);
+						}
+					});
+			return true;
+		}
 		if ((commandLabel.equalsIgnoreCase("setchannel")) && (perm.hasPerm(12))) {
 			if (args.length < 2)
 				return false;

@@ -1,9 +1,9 @@
 name: RCChat
 author: SgtMjrME
 main: me.SgtMjrME.RCChat
-version: 1.1
+version: 1.2
 description: Chat!!
-softdepend: [RCWars, Essentials, RCGuilds, Factions]
+softdepend: [RCWars, Essentials, RCGuilds, Factions, Towny]
 
 commands:
     onlinestaff:
@@ -32,6 +32,8 @@ commands:
         description: faction chat (Factions)
     twc:
         description: towny chat
+    nc:
+        description: Nation chat
     chatperms:
 permissions:
     rcchat.*:

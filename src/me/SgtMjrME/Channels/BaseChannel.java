@@ -15,9 +15,6 @@ import org.bukkit.entity.Player;
 
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
-import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
-import com.palmergames.bukkit.towny.object.Town;
-import com.palmergames.bukkit.towny.object.TownyUniverse;
 
 public abstract class BaseChannel {
 
@@ -167,14 +164,7 @@ public abstract class BaseChannel {
 			}
 		}
 		else if (RCChat.townyWorld != null && p.getWorld().equals(RCChat.townyWorld) && useTag){
-			try {
-				Town t = TownyUniverse.getDataSource().getResident(p.getName()).getTown();
-				if (t != null){ //more for fun than anything
-					s = RCChat.townyTag.replace("%TOWN%", t.getName()) + s;
-				}
-			} catch (NotRegisteredException e) {
-				//No town found... I'm fine with that really
-			}
+			s = TownyHelper.format(s, p);
 		}
 //		if (Channel.get("fc") != null){
 //			if (RCChat.factionWorld != null){
