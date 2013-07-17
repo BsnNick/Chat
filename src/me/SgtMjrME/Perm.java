@@ -62,5 +62,6 @@ public class Perm {
 		p.sendMessage(perms.get(12) ? ChatColor.GREEN + "Exempt" : ChatColor.RED + "Exempt");
 		p.sendMessage(perms.get(13) ? ChatColor.GREEN + "Mute" : ChatColor.RED + "Mute");
 		p.sendMessage(perms.get(20) ? ChatColor.GREEN + "Faction" : ChatColor.RED + "Faction");
+		p.sendMessage(perms.get(24) ? ChatColor.GREEN + "Jail" : ChatColor.RED + "Jail");
 	}
 }
