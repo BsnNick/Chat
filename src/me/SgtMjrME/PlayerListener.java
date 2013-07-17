@@ -30,8 +30,6 @@ public class PlayerListener implements Listener {
 	public void onChangeWorld(PlayerTeleportEvent e) {
 		if (e.isCancelled())
 			return;
-		if (e.getFrom().getWorld().equals(e.getTo().getWorld()))
-			return;
 
 		RCChat.permissions.remove(e.getPlayer());
 		RCChat.permissions.put(e.getPlayer(), new Perm(e.getPlayer()));

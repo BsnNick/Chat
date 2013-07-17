@@ -729,6 +729,9 @@ public class RCChat extends JavaPlugin {
 			addPlayerDefault(p);
 			c = pContains(p);
 		}
+		if (perm.isJailed() && !c.isJail()){
+			p.sendMessage(ChatColor.RED + "[RCCHAT] Cannot speak in other chats while in jail");
+		}
 		c.sendMessage(p, format, message);
 	}
 

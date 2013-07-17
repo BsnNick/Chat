@@ -34,10 +34,16 @@ public class Perm {
 		this.perms.add(p.hasPermission("rcchat.fcsee"));// 21
 		this.perms.add(p.hasPermission("rcchat.tc"));// 22
 		this.perms.add(p.hasPermission("rcchat.tcsee"));// 23
+		this.perms.add(p.hasPermission("rcchat.jail"));//24
 	}
 
 	public boolean hasPerm(int i) {
-		return ((Boolean) this.perms.get(i)).booleanValue();
+		if (this.perms.get(24)) return false;
+		return this.perms.get(i);
+	}
+	
+	public boolean isJailed(){
+		return this.perms.get(24);
 	}
 
 	public void displayPerms(Player p) {

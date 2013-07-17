@@ -41,6 +41,7 @@ public class Channel {
 		channels.putIfAbsent("dc", new Donator(pl));
 		channels.putIfAbsent("m", new Mod(pl));
 		channels.putIfAbsent("me", new Me(pl));
+		channels.putIfAbsent("jc", new JailChat(pl));
 		if (pl.getServer().getPluginManager().isPluginEnabled("Factions")){
 			channels.putIfAbsent("fc", new FactionChat(pl));
 		}
@@ -48,9 +49,11 @@ public class Channel {
 			channels.putIfAbsent("rc", new RaceChat(pl));
 		}
 		if (pl.getServer().getPluginManager().isPluginEnabled("Towny")){
-			try{channels.putIfAbsent("twc", new TownyChat(pl));
+			try{
+				channels.putIfAbsent("twc", new TownyChat(pl));
+				channels.putIfAbsent("nc", new NationChat(pl));
 			} catch(Exception e){
-				//nothing
+				e.printStackTrace();
 			}
 		}
 	}

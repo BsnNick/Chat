@@ -64,17 +64,13 @@ public abstract class BaseChannel {
 			debug.add(p);
 		for (Player p : players) {
 			if (debug.contains(p.getName())) {
-				String debugMes = ChatColor.WHITE + "[RCCD] "
-						+ player.getName() + " " + format + " " + message;
-				p.sendMessage(debugMes);
 				debug.remove(p);
-				continue;
 			}
 			p.sendMessage(out);
 		}
+		String debugMes = ChatColor.WHITE + "[RCCD] " + player.getName()
+					 + " " + message;
 		for (Player p : debug) {
-			String debugMes = ChatColor.WHITE + "[RCCD] " + player.getName()
-					+ " " + format + " " + message;
 			p.sendMessage(debugMes);
 		}
 	}
@@ -222,6 +218,10 @@ public abstract class BaseChannel {
 
 	public void setOtherErr(String otherErr) {
 		this.otherErr = otherErr;
+	}
+
+	public boolean isJail() {
+		return false;
 	}
 
 }
