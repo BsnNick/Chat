@@ -6,8 +6,8 @@ import java.util.List;
 
 import me.SgtMjrME.Perm;
 import me.SgtMjrME.RCChat;
-import me.SgtMjrME.RCWars.ClassUpdate.WarRank;
-import me.SgtMjrME.RCWars.Object.WarPlayers;
+import me.SgtMjrME.ClassUpdate.WarRank;
+import me.SgtMjrME.Object.WarPlayers;
 
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.YamlConfiguration;

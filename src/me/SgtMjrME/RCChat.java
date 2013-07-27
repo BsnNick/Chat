@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 
 import me.SgtMjrME.Channels.BaseChannel;
 import me.SgtMjrME.Channels.Channel;
-import me.SgtMjrME.RCWars.Object.WarPlayers;
+import me.SgtMjrME.Object.WarPlayers;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
