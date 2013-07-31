@@ -43,6 +43,10 @@ public class RCChat extends JavaPlugin {
 	public HashSet<String> onlineHelpers = new HashSet<String>();
 	public final String channelName="RCChat";
 	public static String townyTag;
+	
+	//Going to be used to see all player logins/logoffs.
+	public static boolean indebug = false;
+	public static ConcurrentHashMap<String, Integer> playerLogin = new ConcurrentHashMap<String, Integer>(50);
 
 	public void onEnable() {
 		instance = this;
@@ -129,10 +133,19 @@ public class RCChat extends JavaPlugin {
 			if (Channel.debugPlayers.contains(p)){
 				p.sendMessage("Removing chat sight");
 				Channel.debugPlayers.remove(p);
+				if (Channel.debugPlayers.size() == 0){
+					indebug = false;
+					for(String s : playerLogin.keySet()){
+						p.sendMessage(s + ":" + playerLogin.get(s));
+					}
+					playerLogin.clear();
+					playerLogin = new ConcurrentHashMap<String, Integer>(50);
+				}
 			}
 			else{
 				p.sendMessage("Adding chat sight");
 				Channel.debugPlayers.add(p);
+				indebug = true;
 			}
 			return true;
 		}
@@ -441,6 +454,38 @@ public class RCChat extends JavaPlugin {
 					});
 			return true;
 		}
+		if (commandLabel.equalsIgnoreCase("jc")) {
+			BaseChannel c = Channel.get("jc");
+			if (c == null){
+				p.sendMessage(ChatColor.RED + "Channel not found");
+				return true;
+			}
+			if (!perm.hasPerm(21)) {
+					p.sendMessage(ChatColor.RED + c.getPermErr());
+					return false;
+				}
+			if (args.length == 0) {
+				Channel.pChannels.put(p, c);
+				p.sendMessage(ChatColor.GREEN
+						+ "Chat set to "
+						+ ChatColor.translateAlternateColorCodes('&',
+								c.getDisp()));
+				return true;
+			}
+			Channel.tempChannel.put(p, c);
+			Set<Player> nullSetPlayer = new HashSet<Player>();
+			nullSetPlayer.add(p);
+			final AsyncPlayerChatEvent e = new AsyncPlayerChatEvent(true, p,
+					args2str(args), nullSetPlayer);
+			e.setFormat("  %1$s  %2$s");
+			getServer().getScheduler().runTaskAsynchronously(this,
+					new Runnable() {
+						public void run() {
+							RCChat.this.playerListener.onPlayerChat(e);
+						}
+					});
+			return true;
+		}
 		if ((commandLabel.equalsIgnoreCase("setchannel")) && (perm.hasPerm(12))) {
 			if (args.length < 2)
 				return false;
@@ -668,6 +713,8 @@ public class RCChat extends JavaPlugin {
 	public void removePlayer(Player p) {
 		Channel.pChannels.remove(p);
 		Channel.tempChannel.remove(p);
+		Channel.delay.remove(p.getName());
+		Channel.muted.remove(p);
 		RCChat.permissions.remove(p);
 	}
 
@@ -706,13 +753,13 @@ public class RCChat extends JavaPlugin {
 			perm = (Perm) RCChat.permissions.get(p);
 		}
 		if (!perm.hasPerm(12)) {
-			if ((Channel.delay.get(p) != null)
-					&& ((System.currentTimeMillis() - Channel.delay.get(p))
+			if ((Channel.delay.contains(p.getName()))
+					&& ((System.currentTimeMillis() - Channel.delay.get(p.getName()))
 							/ 1000L < this.time)){
 				System.out.println("Player " + p.getName() + " is spamming RCChat");
 				return;
 			}
-			Channel.delay.put(p, System.currentTimeMillis());
+			Channel.delay.put(p.getName(), System.currentTimeMillis());
 		}
 		final Player hold = p;
 		BaseChannel c;

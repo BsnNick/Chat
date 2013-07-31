@@ -69,7 +69,7 @@ public abstract class BaseChannel {
 			p.sendMessage(out);
 		}
 		String debugMes = ChatColor.WHITE + "[RCCD] " + player.getName()
-					 + " " + message;
+					 + " " + out;
 		for (Player p : debug) {
 			p.sendMessage(debugMes);
 		}

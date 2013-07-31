@@ -1,7 +1,7 @@
 name: RCChat
 author: SgtMjrME
 main: me.SgtMjrME.RCChat
-version: 1.35
+version: 1.4
 description: Chat!!
 softdepend: [RCWars, Essentials, Factions, Towny]
 

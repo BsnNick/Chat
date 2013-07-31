@@ -1,6 +1,10 @@
 package me.SgtMjrME;
 
+import me.SgtMjrME.Channels.Channel;
+
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -26,7 +30,7 @@ public class PlayerListener implements Listener {
 		e.setFormat("  %1$s  %2$s");
 	}
 
-	@EventHandler(priority = EventPriority.NORMAL)
+	@EventHandler(priority = EventPriority.MONITOR)
 	public void onChangeWorld(PlayerTeleportEvent e) {
 		if (e.isCancelled())
 			return;
@@ -57,6 +61,17 @@ public class PlayerListener implements Listener {
 
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onPlayerLeave(PlayerQuitEvent e) {
+		if (RCChat.indebug){
+			if (RCChat.playerLogin.containsKey(e.getPlayer().getName())){
+				int val = RCChat.playerLogin.get(e.getPlayer().getName()) + 1;
+				RCChat.playerLogin.remove(e.getPlayer().getName());
+				RCChat.playerLogin.put(e.getPlayer().getName(), val);
+			}
+			else{
+				RCChat.playerLogin.put(e.getPlayer().getName(), 1);
+			}
+			for (Player p : Channel.debugPlayers) p.sendMessage(ChatColor.RED + "Player " + e.getPlayer().getName() + " has logged off");
+		}
 		this.pl.removePlayer(e.getPlayer());
 		this.pl.onlineHelpers.remove(e.getPlayer().getName());
 	}
@@ -91,6 +106,11 @@ public class PlayerListener implements Listener {
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onPlayerLogin(PlayerJoinEvent e) {
 		RCChat.permissions.put(e.getPlayer(), new Perm(e.getPlayer()));
+		if (RCChat.indebug){
+			for (Player p : Channel.debugPlayers){
+				p.sendMessage(ChatColor.GREEN + "Player " + e.getPlayer().getName() + " has logged on");
+			}
+		}
 		if ((e.getPlayer().hasPermission("rcchat.m")))
 			this.pl.onlineHelpers.add(e.getPlayer().getName());
 	}
