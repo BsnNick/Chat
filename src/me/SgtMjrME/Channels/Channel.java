@@ -22,7 +22,7 @@ public class Channel {
 	public static ConcurrentHashMap<Player, Boolean> muted = new ConcurrentHashMap<Player, Boolean>();
 
 	// Last message sent by player
-	public static ConcurrentHashMap<String, Long> delay = new ConcurrentHashMap<String, Long>();
+//	public static ConcurrentHashMap<String, Long> delay = new ConcurrentHashMap<String, Long>();
 
 	// ChatDebug players, added to every message
 	public static CopyOnWriteArrayList<Player> debugPlayers = new CopyOnWriteArrayList<Player>();
