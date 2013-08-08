@@ -6,7 +6,6 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-import me.SgtMjrME.Perm;
 import me.SgtMjrME.RCChat;
 
 import org.bukkit.ChatColor;
@@ -34,12 +33,6 @@ public class JailChat extends BaseChannel{
 	
 	@Override
 	void getDestination(Player p, String format, String message) {
-		// First, check if player has perms
-		Perm perm = RCChat.getPerm(p);
-		if (!perm.hasPerm(24)) {
-			p.sendMessage(getPermErr());
-			return;
-		}
 
 		// Questionable call, never used aslist
 		List<Player> players = new ArrayList<Player>(Arrays.asList(pl
@@ -51,6 +44,7 @@ public class JailChat extends BaseChannel{
 			if (!RCChat.getPerm(i.next()).hasPerm(1))
 				i.remove();
 		}
+		players.add(p);
 		// send
 		receiveDestination(players, p, format, message);
 	}

@@ -1,7 +1,7 @@
 name: RCChat
 author: SgtMjrME
 main: me.SgtMjrME.RCChat
-version: 1.4
+version: 1.5
 description: Chat!!
 softdepend: [RCWars, Essentials, Factions, Towny]
 
@@ -37,9 +37,13 @@ commands:
     jc:
         description: Jail Chat (I keep forgetting these!)
     chatperms:
+    setjailarea:
 permissions:
     rcchat.*:
         children:
+            rcchat.admin:
+                description: admin
+                default: op
             rcchat.m:
                 description: mod chat
                 default: op

@@ -8,9 +8,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 //import org.bukkit.event.player.PlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -20,6 +22,7 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 //@SuppressWarnings("deprecation")
 public class PlayerListener implements Listener {
 	private final RCChat pl;
+	public String jailSetter;
 
 	PlayerListener(RCChat r) {
 		this.pl = r;
@@ -101,6 +104,20 @@ public class PlayerListener implements Listener {
 			this.pl.onlineHelpers.add(e.getPlayer().getName());
 		else
 			this.pl.onlineHelpers.remove(e.getPlayer().getName());
+	}
+	
+	@EventHandler(priority = EventPriority.NORMAL)
+	public void onPlayerHit(PlayerInteractEvent e){
+		if (e.getAction().equals(Action.LEFT_CLICK_BLOCK)){
+			if (jailSetter != null){
+				if (e.getPlayer().getName().equals(jailSetter)){
+					if (pl.setJail(e.getClickedBlock().getLocation())){
+						jailSetter = null;
+						e.getPlayer().sendMessage(ChatColor.GREEN + "You have set the jail locations");
+					}
+				}
+			}
+		}
 	}
 
 	@EventHandler(priority = EventPriority.NORMAL)

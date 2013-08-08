@@ -1,7 +1,5 @@
 package me.SgtMjrME;
 
-import com.earth2me.essentials.Essentials;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,10 +12,11 @@ import java.util.logging.Logger;
 
 import me.SgtMjrME.Channels.BaseChannel;
 import me.SgtMjrME.Channels.Channel;
-import me.SgtMjrME.Object.WarPlayers;
+import me.SgtMjrME.RCWars.Object.WarPlayers;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -27,6 +26,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import com.earth2me.essentials.Essentials;
 
 public class RCChat extends JavaPlugin {
 	static public RCChat instance;
@@ -42,6 +43,8 @@ public class RCChat extends JavaPlugin {
 	private PlayerListener playerListener;
 	public HashSet<String> onlineHelpers = new HashSet<String>();
 	public final String channelName="RCChat";
+	private static Location jailLL;
+	private static Location jailUR;
 	public static String townyTag;
 	
 	//Going to be used to see all player logins/logoffs.
@@ -109,6 +112,34 @@ public class RCChat extends JavaPlugin {
 		
 		this.playerListener = new PlayerListener(this);
 		this.pm.registerEvents(this.playerListener, this);
+		
+		try{
+			jailLL = str2Loc(config.getString("jailLL"));
+			jailUR = str2Loc(config.getString("jailUR"));
+		} catch (Exception e){
+			Bukkit.getLogger().severe("[RCCHAT] Could not load jail location!");
+			jailLL = null;
+			jailUR = null;
+		}
+	}
+	
+	public Location str2Loc(String s) {
+		String[] s1 = s.split(" ");
+		Location loc = new Location(getServer().getWorld(s1[0]), str2d(s1[1]),
+				str2d(s1[2]), str2d(s1[3]), (float) str2d(s1[4]),
+				(float) str2d(s1[5]));
+		return loc;
+	}
+
+	public double str2d(String s) {
+		return Double.parseDouble(s);
+	}
+
+	public static String loc2str(Location loc) {
+		String output = loc.getWorld().getName();
+		output = output.concat(" " + loc.getX() + " " + loc.getY() + " "
+				+ loc.getZ() + " " + loc.getYaw() + " " + loc.getPitch());
+		return output;
 	}
 
 	public boolean onCommand(CommandSender sender, Command cmd,
@@ -454,38 +485,38 @@ public class RCChat extends JavaPlugin {
 					});
 			return true;
 		}
-		if (commandLabel.equalsIgnoreCase("jc")) {
-			BaseChannel c = Channel.get("jc");
-			if (c == null){
-				p.sendMessage(ChatColor.RED + "Channel not found");
-				return true;
-			}
-			if (!perm.hasPerm(21)) {
-					p.sendMessage(ChatColor.RED + c.getPermErr());
-					return false;
-				}
-			if (args.length == 0) {
-				Channel.pChannels.put(p, c);
-				p.sendMessage(ChatColor.GREEN
-						+ "Chat set to "
-						+ ChatColor.translateAlternateColorCodes('&',
-								c.getDisp()));
-				return true;
-			}
-			Channel.tempChannel.put(p, c);
-			Set<Player> nullSetPlayer = new HashSet<Player>();
-			nullSetPlayer.add(p);
-			final AsyncPlayerChatEvent e = new AsyncPlayerChatEvent(true, p,
-					args2str(args), nullSetPlayer);
-			e.setFormat("  %1$s  %2$s");
-			getServer().getScheduler().runTaskAsynchronously(this,
-					new Runnable() {
-						public void run() {
-							RCChat.this.playerListener.onPlayerChat(e);
-						}
-					});
-			return true;
-		}
+//		if (commandLabel.equalsIgnoreCase("jc")) {
+//			BaseChannel c = Channel.get("jc");
+//			if (c == null){
+//				p.sendMessage(ChatColor.RED + "Channel not found");
+//				return true;
+//			}
+//			if (!perm.hasPerm(21)) {
+//					p.sendMessage(ChatColor.RED + c.getPermErr());
+//					return false;
+//				}
+//			if (args.length == 0) {
+//				Channel.pChannels.put(p, c);
+//				p.sendMessage(ChatColor.GREEN
+//						+ "Chat set to "
+//						+ ChatColor.translateAlternateColorCodes('&',
+//								c.getDisp()));
+//				return true;
+//			}
+//			Channel.tempChannel.put(p, c);
+//			Set<Player> nullSetPlayer = new HashSet<Player>();
+//			nullSetPlayer.add(p);
+//			final AsyncPlayerChatEvent e = new AsyncPlayerChatEvent(true, p,
+//					args2str(args), nullSetPlayer);
+//			e.setFormat("  %1$s  %2$s");
+//			getServer().getScheduler().runTaskAsynchronously(this,
+//					new Runnable() {
+//						public void run() {
+//							RCChat.this.playerListener.onPlayerChat(e);
+//						}
+//					});
+//			return true;
+//		}
 		if ((commandLabel.equalsIgnoreCase("setchannel")) && (perm.hasPerm(12))) {
 			if (args.length < 2)
 				return false;
@@ -557,7 +588,43 @@ public class RCChat extends JavaPlugin {
 				}
 			}
 		}
+		if (commandLabel.equalsIgnoreCase("setjailarea") && p.hasPermission("rcchat.admin")){
+			jailLL=null;
+			jailUR=null;
+			playerListener.jailSetter = p.getName();
+			p.sendMessage(ChatColor.GREEN + "Setting jail area");
+		}
 		return true;
+	}
+	
+	//returns true if both set, false otherwise;
+	public boolean setJail(Location l){
+		if (jailLL == null) jailLL = l;
+		else if (jailUR == null){
+			jailUR = l;
+			double x1=jailLL.getX(),x2=jailUR.getX(),y1=jailLL.getY(),y2=jailUR.getY(),z1=jailLL.getZ(),z2=jailUR.getZ(),temp;
+			if (x1 > x2){temp=x1;x1=x2;x2=temp;}
+			if (y1 > y2){temp=y1;y1=y2;y2=temp;}
+			if (z1 > z2){temp=z1;z1=z2;z2=temp;}
+			jailLL = new Location(jailLL.getWorld(),x1,y1,z1);
+			jailUR = new Location(jailUR.getWorld(),x2,y2,z2);
+			YamlConfiguration cfg = new YamlConfiguration();
+			try {
+				cfg.load(getDataFolder() + "/config.yml");
+				cfg.set("jailLL", loc2str(jailLL));
+				cfg.set("jailUR", loc2str(jailUR));
+				cfg.save(getDataFolder() + "/config.yml");
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (InvalidConfigurationException e) {
+				e.printStackTrace();
+			}
+			return true;
+		}
+		//Not sure what happened if you got here. 
+		return false;
 	}
 
 /*	public void sendMessage(Player p, BaseChannel c, String format, String s) {
@@ -736,6 +803,7 @@ public class RCChat extends JavaPlugin {
 
 	public void changePlayerChannel(Player p, BaseChannel c) {
 		Channel.pChannels.put(p, c);
+		Channel.tempChannel.put(p, c);
 	}
 
 	@Deprecated
@@ -747,6 +815,15 @@ public class RCChat extends JavaPlugin {
 	public void fromRunnable(Player p, String format, String message) {
 		if (isMuted(p))
 			return;
+		if (!p.hasPermission("rcchat.m")){
+			BaseChannel b;
+			if (isJailed(p.getLocation()))
+				changePlayerChannel(p, Channel.get("jc"));
+			else if ((b = pContains(p)) != null && b.equals(Channel.get("jc"))){
+				addPlayerDefault(p);
+				Channel.tempChannel.remove(p);
+			}
+		}
 		Perm perm = (Perm) RCChat.getPerm(p);
 		if (perm == null) {
 			RCChat.permissions.put(p, new Perm(p));
@@ -776,9 +853,6 @@ public class RCChat extends JavaPlugin {
 			addPlayerDefault(p);
 			c = pContains(p);
 		}
-		if (perm.isJailed() && !c.isJail()){
-			p.sendMessage(ChatColor.RED + "[RCCHAT] Cannot speak in other chats while in jail");
-		}
 		c.sendMessage(p, format, message);
 	}
 
@@ -792,5 +866,15 @@ public class RCChat extends JavaPlugin {
 		Perm newperm = new Perm(p);
 		permissions.put(p, newperm);
 		return newperm;
+	}
+
+	public static boolean isJailed(Location location) {
+		if (!location.getWorld().equals(jailLL.getWorld())) return false;
+		return (jailLL.getX() <= location.getX() 
+				&& jailLL.getY() <= location.getY()
+				&& jailLL.getZ() <= location.getZ()
+				&& jailUR.getX() >= location.getX()
+				&& jailUR.getY() >= location.getY()
+				&& jailUR.getZ() >= location.getZ());
 	}
 }
