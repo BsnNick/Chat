@@ -37,7 +37,7 @@ public class RCChat extends JavaPlugin {
 	static public ConcurrentHashMap<Player, Perm> permissions = new ConcurrentHashMap<Player, Perm>();
 	public static World factionWorld;
 	public static World townyWorld;
-	private double time;
+//	private double time;
 	private BaseChannel defaultChannel;
 	private PlayerListener playerListener;
 	public HashSet<String> onlineHelpers = new HashSet<String>();
@@ -81,7 +81,7 @@ public class RCChat extends JavaPlugin {
 			this.defaultChannel = Channel.get("l");
 			this.log.log(Level.SEVERE, "Check config! defaultchannel not set!");
 		}
-		this.time = config.getDouble("delay", 1.0D);
+//		this.time = config.getDouble("delay", 1.0D);
 		String s = config.getString("webcheck");
 		if (s != null) {
 			String[] s1 = s.split(",");
@@ -220,9 +220,9 @@ public class RCChat extends JavaPlugin {
 				return true;
 			}
 			if (!perm.hasPerm(3)) {
-					p.sendMessage(ChatColor.RED + c.getPermErr());
-					return false;
-				}
+				p.sendMessage(ChatColor.RED + c.getPermErr());
+				return false;
+			}
 			if (args.length == 0) {
 				Channel.pChannels.put(p, c);
 				p.sendMessage(ChatColor.GREEN
@@ -713,8 +713,9 @@ public class RCChat extends JavaPlugin {
 	public void removePlayer(Player p) {
 		Channel.pChannels.remove(p);
 		Channel.tempChannel.remove(p);
-		Channel.delay.remove(p.getName());
+//		Channel.delay.remove(p.getName());
 		Channel.muted.remove(p);
+		Channel.debugPlayers.remove(p);
 		RCChat.permissions.remove(p);
 	}
 
@@ -752,15 +753,15 @@ public class RCChat extends JavaPlugin {
 			RCChat.permissions.put(p, new Perm(p));
 			perm = (Perm) RCChat.permissions.get(p);
 		}
-		if (!perm.hasPerm(12)) {
-			if ((Channel.delay.contains(p.getName()))
-					&& ((System.currentTimeMillis() - Channel.delay.get(p.getName()))
-							/ 1000L < this.time)){
-				System.out.println("Player " + p.getName() + " is spamming RCChat");
-				return;
-			}
-			Channel.delay.put(p.getName(), System.currentTimeMillis());
-		}
+//		if (!perm.hasPerm(12)) {
+//			if ((Channel.delay.contains(p.getName()))
+//					&& ((System.currentTimeMillis() - Channel.delay.get(p.getName()))
+//							/ 1000L < this.time)){
+//				System.out.println("Player " + p.getName() + " is spamming RCChat");
+//				return;
+//			}
+//			Channel.delay.put(p.getName(), System.currentTimeMillis());
+//		}
 		final Player hold = p;
 		BaseChannel c;
 		if ((c = tempContains(p)) != null) {
