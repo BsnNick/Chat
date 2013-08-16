@@ -7,8 +7,8 @@ import java.util.List;
 
 import me.SgtMjrME.Perm;
 import me.SgtMjrME.RCChat;
-import me.SgtMjrME.RCWars.Object.Race;
-import me.SgtMjrME.RCWars.Object.WarPlayers;
+import me.SgtMjrME.Object.Race;
+import me.SgtMjrME.Object.WarPlayers;
 
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.InvalidConfigurationException;

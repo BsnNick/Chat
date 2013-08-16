@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 
 import me.SgtMjrME.Channels.BaseChannel;
 import me.SgtMjrME.Channels.Channel;
-import me.SgtMjrME.RCWars.Object.WarPlayers;
+import me.SgtMjrME.Object.WarPlayers;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -37,7 +37,7 @@ public class RCChat extends JavaPlugin {
 	public PluginManager pm;
 	static public ConcurrentHashMap<Player, Perm> permissions = new ConcurrentHashMap<Player, Perm>();
 	public static World factionWorld;
-	public static World townyWorld;
+	public static World[] townyWorld;
 //	private double time;
 	private BaseChannel defaultChannel;
 	private PlayerListener playerListener;
@@ -98,7 +98,8 @@ public class RCChat extends JavaPlugin {
 		}
 		s = config.getString("towny");
 		if (s != null){
-			townyWorld = getServer().getWorld(s);
+			for (String str : s.split(","))
+				townyWorld = Util.addArr(townyWorld, getServer().getWorld(str));
 		}
 		s = config.getString("townyTag");
 		if (s != null){

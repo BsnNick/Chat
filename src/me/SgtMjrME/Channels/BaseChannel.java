@@ -6,8 +6,9 @@ import java.util.List;
 
 import me.SgtMjrME.Perm;
 import me.SgtMjrME.RCChat;
-import me.SgtMjrME.RCWars.ClassUpdate.WarRank;
-import me.SgtMjrME.RCWars.Object.WarPlayers;
+import me.SgtMjrME.Util;
+import me.SgtMjrME.ClassUpdate.WarRank;
+import me.SgtMjrME.Object.WarPlayers;
 
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -159,7 +160,7 @@ public abstract class BaseChannel {
 				if (fp.hasFaction()) s = fp.getTag() + s;
 			}
 		}
-		else if (RCChat.townyWorld != null && p.getWorld().equals(RCChat.townyWorld) && useTag){
+		else if (RCChat.townyWorld != null && Util.inTowny(p) && useTag){
 			s = TownyHelper.format(s, p);
 		}
 //		if (Channel.get("fc") != null){
