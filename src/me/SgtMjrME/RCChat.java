@@ -272,7 +272,39 @@ public class RCChat extends JavaPlugin {
 			getServer().getScheduler().runTaskAsynchronously(this,
 					new Runnable() {
 						public void run() {
-							RCChat.this.playerListener.onPlayerChat(e);
+							playerListener.onPlayerChat(e);
+						}
+					});
+			return true;
+		}
+		if (commandLabel.equalsIgnoreCase("sc")) {
+			BaseChannel c = Channel.get("sc");
+			if (c == null){
+				p.sendMessage(ChatColor.RED + "Channel not found");
+				return true;
+			}
+			if (!perm.hasPerm(3)) {
+					p.sendMessage(ChatColor.RED + c.getPermErr());
+					return false;
+				}
+			if (args.length == 0) {
+				Channel.pChannels.put(p, c);
+				p.sendMessage(ChatColor.GREEN
+						+ "Chat set to "
+						+ ChatColor.translateAlternateColorCodes('&',
+								c.getDisp()));
+				return true;
+			}
+			Channel.tempChannel.put(p, c);
+			Set<Player> nullSetPlayer = new HashSet<Player>();
+			nullSetPlayer.add(p);
+			final AsyncPlayerChatEvent e = new AsyncPlayerChatEvent(true, p,
+					args2str(args), nullSetPlayer);
+			e.setFormat("  %1$s  %2$s");
+			getServer().getScheduler().runTaskAsynchronously(this,
+					new Runnable() {
+						public void run() {
+							playerListener.onPlayerChat(e);
 						}
 					});
 			return true;
@@ -871,6 +903,7 @@ public class RCChat extends JavaPlugin {
 	}
 
 	public static boolean isJailed(Location location) {
+		if (jailLL == null || jailUR == null) return false;
 		if (!location.getWorld().equals(jailLL.getWorld())) return false;
 		return (jailLL.getX() <= location.getX() 
 				&& jailLL.getY() <= location.getY()

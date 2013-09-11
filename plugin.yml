@@ -18,6 +18,8 @@ commands:
         description: All world
     dc:
         description: donators
+    sc:
+        description: Server
     rc:
         description: race chat (requires RCWars)
     setchannel:

@@ -14,9 +14,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
-import com.massivecraft.factions.FPlayer;
-import com.massivecraft.factions.FPlayers;
-
 public abstract class BaseChannel {
 
 	private String name;
@@ -153,12 +150,8 @@ public abstract class BaseChannel {
 		} else {
 			s = s.replace("%1$s", p.getDisplayName());
 		}
-		if (RCChat.factionWorld != null && p.getWorld().equals(RCChat.factionWorld) && 
-				useTag){
-			FPlayer fp = FPlayers.i.get(p);
-			if (fp != null){
-				if (fp.hasFaction()) s = fp.getTag() + s;
-			}
+		if (RCChat.factionWorld != null && Util.inFactions(p) && useTag){
+			s = FactionHelper.format(s,p);
 		}
 		else if (RCChat.townyWorld != null && Util.inTowny(p) && useTag){
 			s = TownyHelper.format(s, p);

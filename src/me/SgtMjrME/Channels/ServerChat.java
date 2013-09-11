@@ -13,14 +13,14 @@ import org.bukkit.ChatColor;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.entity.Player;
 
-public class Donator extends BaseChannel {
+public class ServerChat extends BaseChannel {
 
 	final RCChat pl;
 
-	public Donator(RCChat pl) {
+	public ServerChat(RCChat pl) {
 		this.pl = pl;
 		try {
-			cfg.load(pl.getDataFolder().getAbsolutePath() + "/channels/dc.yml");
+			cfg.load(pl.getDataFolder().getAbsolutePath() + "/channels/sc.yml");
 			setName(cfg.getString("name"));
 			setDisp(cfg.getString("disp"));
 			setPermission(cfg.getString("permission"));
@@ -34,8 +34,6 @@ public class Donator extends BaseChannel {
 
 	@Override
 	void getDestination(Player p, String format, String message) {
-		p.sendMessage(ChatColor.RED + "DC is being phased out, please use sc");
-		
 		// First, check if player has perms
 		Perm perm = RCChat.getPerm(p);
 		if (!perm.hasPerm(3)) {
