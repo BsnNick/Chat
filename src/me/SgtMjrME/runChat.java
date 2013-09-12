@@ -1,21 +1,17 @@
 package me.SgtMjrME;
 
-import org.bukkit.entity.Player;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 public class runChat implements Runnable {
 	private RCChat pl;
-	private Player p;
-	private String format;
-	private String message;
+	AsyncPlayerChatEvent e;
 
-	runChat(RCChat pl, Player p, String format, String message) {
+	runChat(RCChat pl, AsyncPlayerChatEvent e) {
 		this.pl = pl;
-		this.p = p;
-		this.format = format;
-		this.message = message;
+		this.e = e;
 	}
 
 	public void run() {
-		this.pl.fromRunnable(this.p, this.format, this.message);
+		this.pl.fromRunnable(e);
 	}
 }

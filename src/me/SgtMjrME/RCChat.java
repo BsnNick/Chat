@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -200,17 +199,18 @@ public class RCChat extends JavaPlugin {
 				return true;
 			}
 			Channel.tempChannel.put(p, c);
-			Set<Player> nullSetPlayer = new HashSet<Player>();
-			nullSetPlayer.add(p);
-			final AsyncPlayerChatEvent e = new AsyncPlayerChatEvent(true, p,
-					args2str(args), nullSetPlayer);
-			e.setFormat("  %1$s  %2$s");
-			getServer().getScheduler().runTaskAsynchronously(this,
-					new Runnable() {
-						public void run() {
-							RCChat.this.playerListener.onPlayerChat(e);
-						}
-					});
+//			Set<Player> nullSetPlayer = new HashSet<Player>();
+//			nullSetPlayer.add(p);
+//			final AsyncPlayerChatEvent e = new AsyncPlayerChatEvent(true, p,
+//					args2str(args), nullSetPlayer);
+//			e.setFormat("  %1$s  %2$s");
+			p.chat(args2str(args));
+//			getServer().getScheduler().runTaskAsynchronously(this,
+//					new Runnable() {
+//						public void run() {
+//							RCChat.this.playerListener.onPlayerChat(e);
+//						}
+//					});
 			return true;
 		}
 		if (commandLabel.equalsIgnoreCase("l")) {
@@ -232,17 +232,18 @@ public class RCChat extends JavaPlugin {
 				return true;
 			}
 			Channel.tempChannel.put(p, c);
-			Set<Player> nullSetPlayer = new HashSet<Player>();
-			nullSetPlayer.add(p);
-			final AsyncPlayerChatEvent e = new AsyncPlayerChatEvent(true, p,
-					args2str(args), nullSetPlayer);
-			e.setFormat("  %1$s  %2$s");
-			getServer().getScheduler().runTaskAsynchronously(this,
-					new Runnable() {
-						public void run() {
-							RCChat.this.playerListener.onPlayerChat(e);
-						}
-					});
+			p.chat(args2str(args));
+//			Set<Player> nullSetPlayer = new HashSet<Player>();
+//			nullSetPlayer.add(p);
+//			final AsyncPlayerChatEvent e = new AsyncPlayerChatEvent(true, p,
+//					args2str(args), nullSetPlayer);
+//			e.setFormat("  %1$s  %2$s");
+//			getServer().getScheduler().runTaskAsynchronously(this,
+//					new Runnable() {
+//						public void run() {
+//							RCChat.this.playerListener.onPlayerChat(e);
+//						}
+//					});
 			return true;
 		}
 		if (commandLabel.equalsIgnoreCase("dc")) {
@@ -264,17 +265,18 @@ public class RCChat extends JavaPlugin {
 				return true;
 			}
 			Channel.tempChannel.put(p, c);
-			Set<Player> nullSetPlayer = new HashSet<Player>();
-			nullSetPlayer.add(p);
-			final AsyncPlayerChatEvent e = new AsyncPlayerChatEvent(true, p,
-					args2str(args), nullSetPlayer);
-			e.setFormat("  %1$s  %2$s");
-			getServer().getScheduler().runTaskAsynchronously(this,
-					new Runnable() {
-						public void run() {
-							playerListener.onPlayerChat(e);
-						}
-					});
+			p.chat(args2str(args));
+//			Set<Player> nullSetPlayer = new HashSet<Player>();
+//			nullSetPlayer.add(p);
+//			final AsyncPlayerChatEvent e = new AsyncPlayerChatEvent(true, p,
+//					args2str(args), nullSetPlayer);
+//			e.setFormat("  %1$s  %2$s");
+//			getServer().getScheduler().runTaskAsynchronously(this,
+//					new Runnable() {
+//						public void run() {
+//							playerListener.onPlayerChat(e);
+//						}
+//					});
 			return true;
 		}
 		if (commandLabel.equalsIgnoreCase("sc")) {
@@ -296,17 +298,18 @@ public class RCChat extends JavaPlugin {
 				return true;
 			}
 			Channel.tempChannel.put(p, c);
-			Set<Player> nullSetPlayer = new HashSet<Player>();
-			nullSetPlayer.add(p);
-			final AsyncPlayerChatEvent e = new AsyncPlayerChatEvent(true, p,
-					args2str(args), nullSetPlayer);
-			e.setFormat("  %1$s  %2$s");
-			getServer().getScheduler().runTaskAsynchronously(this,
-					new Runnable() {
-						public void run() {
-							playerListener.onPlayerChat(e);
-						}
-					});
+			p.chat(args2str(args));
+//			Set<Player> nullSetPlayer = new HashSet<Player>();
+//			nullSetPlayer.add(p);
+//			final AsyncPlayerChatEvent e = new AsyncPlayerChatEvent(true, p,
+//					args2str(args), nullSetPlayer);
+//			e.setFormat("  %1$s  %2$s");
+//			getServer().getScheduler().runTaskAsynchronously(this,
+//					new Runnable() {
+//						public void run() {
+//							playerListener.onPlayerChat(e);
+//						}
+//					});
 			return true;
 		}
 		if (commandLabel.equalsIgnoreCase("me")) {
@@ -328,17 +331,18 @@ public class RCChat extends JavaPlugin {
 				return true;
 			}
 			Channel.tempChannel.put(p, c);
-			Set<Player> nullSetPlayer = new HashSet<Player>();
-			nullSetPlayer.add(p);
-			final AsyncPlayerChatEvent e = new AsyncPlayerChatEvent(true, p,
-					args2str(args), nullSetPlayer);
-			e.setFormat("  %1$s  %2$s");
-			getServer().getScheduler().runTaskAsynchronously(this,
-					new Runnable() {
-						public void run() {
-							RCChat.this.playerListener.onPlayerChat(e);
-						}
-					});
+			p.chat(args2str(args));
+//			Set<Player> nullSetPlayer = new HashSet<Player>();
+//			nullSetPlayer.add(p);
+//			final AsyncPlayerChatEvent e = new AsyncPlayerChatEvent(true, p,
+//					args2str(args), nullSetPlayer);
+//			e.setFormat("  %1$s  %2$s");
+//			getServer().getScheduler().runTaskAsynchronously(this,
+//					new Runnable() {
+//						public void run() {
+//							RCChat.this.playerListener.onPlayerChat(e);
+//						}
+//					});
 			return true;
 		}
 		if (commandLabel.equalsIgnoreCase("m")) {
@@ -360,17 +364,18 @@ public class RCChat extends JavaPlugin {
 				return true;
 			}
 			Channel.tempChannel.put(p, c);
-			Set<Player> nullSetPlayer = new HashSet<Player>();
-			nullSetPlayer.add(p);
-			final AsyncPlayerChatEvent e = new AsyncPlayerChatEvent(true, p,
-					args2str(args), nullSetPlayer);
-			e.setFormat("  %1$s  %2$s");
-			getServer().getScheduler().runTaskAsynchronously(this,
-					new Runnable() {
-						public void run() {
-							RCChat.this.playerListener.onPlayerChat(e);
-						}
-					});
+			p.chat(args2str(args));
+//			Set<Player> nullSetPlayer = new HashSet<Player>();
+//			nullSetPlayer.add(p);
+//			final AsyncPlayerChatEvent e = new AsyncPlayerChatEvent(true, p,
+//					args2str(args), nullSetPlayer);
+//			e.setFormat("  %1$s  %2$s");
+//			getServer().getScheduler().runTaskAsynchronously(this,
+//					new Runnable() {
+//						public void run() {
+//							RCChat.this.playerListener.onPlayerChat(e);
+//						}
+//					});
 			return true;
 		}
 		if (commandLabel.equalsIgnoreCase("rc")) {
@@ -397,17 +402,18 @@ public class RCChat extends JavaPlugin {
 				return true;
 			}
 			Channel.tempChannel.put(p, c);
-			Set<Player> nullSetPlayer = new HashSet<Player>();
-			nullSetPlayer.add(p);
-			final AsyncPlayerChatEvent e = new AsyncPlayerChatEvent(true, p,
-					args2str(args), nullSetPlayer);
-			e.setFormat("  %1$s  %2$s");
-			getServer().getScheduler().runTaskAsynchronously(this,
-					new Runnable() {
-						public void run() {
-							RCChat.this.playerListener.onPlayerChat(e);
-						}
-					});
+			p.chat(args2str(args));
+//			Set<Player> nullSetPlayer = new HashSet<Player>();
+//			nullSetPlayer.add(p);
+//			final AsyncPlayerChatEvent e = new AsyncPlayerChatEvent(true, p,
+//					args2str(args), nullSetPlayer);
+//			e.setFormat("  %1$s  %2$s");
+//			getServer().getScheduler().runTaskAsynchronously(this,
+//					new Runnable() {
+//						public void run() {
+//							RCChat.this.playerListener.onPlayerChat(e);
+//						}
+//					});
 			return true;
 		}
 		if (commandLabel.equalsIgnoreCase("fc")) {
@@ -433,17 +439,18 @@ public class RCChat extends JavaPlugin {
 				return true;
 			}
 			Channel.tempChannel.put(p, c);
-			Set<Player> nullSetPlayer = new HashSet<Player>();
-			nullSetPlayer.add(p);
-			final AsyncPlayerChatEvent e = new AsyncPlayerChatEvent(true, p,
-					args2str(args), nullSetPlayer);
-			e.setFormat("  %1$s  %2$s");
-			getServer().getScheduler().runTaskAsynchronously(this,
-					new Runnable() {
-						public void run() {
-							RCChat.this.playerListener.onPlayerChat(e);
-						}
-					});
+			p.chat(args2str(args));
+//			Set<Player> nullSetPlayer = new HashSet<Player>();
+//			nullSetPlayer.add(p);
+//			final AsyncPlayerChatEvent e = new AsyncPlayerChatEvent(true, p,
+//					args2str(args), nullSetPlayer);
+//			e.setFormat("  %1$s  %2$s");
+//			getServer().getScheduler().runTaskAsynchronously(this,
+//					new Runnable() {
+//						public void run() {
+//							RCChat.this.playerListener.onPlayerChat(e);
+//						}
+//					});
 			return true;
 		}
 		if (commandLabel.equalsIgnoreCase("twc")) {
@@ -469,17 +476,18 @@ public class RCChat extends JavaPlugin {
 				return true;
 			}
 			Channel.tempChannel.put(p, c);
-			Set<Player> nullSetPlayer = new HashSet<Player>();
-			nullSetPlayer.add(p);
-			final AsyncPlayerChatEvent e = new AsyncPlayerChatEvent(true, p,
-					args2str(args), nullSetPlayer);
-			e.setFormat("  %1$s  %2$s");
-			getServer().getScheduler().runTaskAsynchronously(this,
-					new Runnable() {
-						public void run() {
-							RCChat.this.playerListener.onPlayerChat(e);
-						}
-					});
+			p.chat(args2str(args));
+//			Set<Player> nullSetPlayer = new HashSet<Player>();
+//			nullSetPlayer.add(p);
+//			final AsyncPlayerChatEvent e = new AsyncPlayerChatEvent(true, p,
+//					args2str(args), nullSetPlayer);
+//			e.setFormat("  %1$s  %2$s");
+//			getServer().getScheduler().runTaskAsynchronously(this,
+//					new Runnable() {
+//						public void run() {
+//							RCChat.this.playerListener.onPlayerChat(e);
+//						}
+//					});
 			return true;
 		}
 		if (commandLabel.equalsIgnoreCase("nc")) {
@@ -505,17 +513,18 @@ public class RCChat extends JavaPlugin {
 				return true;
 			}
 			Channel.tempChannel.put(p, c);
-			Set<Player> nullSetPlayer = new HashSet<Player>();
-			nullSetPlayer.add(p);
-			final AsyncPlayerChatEvent e = new AsyncPlayerChatEvent(true, p,
-					args2str(args), nullSetPlayer);
-			e.setFormat("  %1$s  %2$s");
-			getServer().getScheduler().runTaskAsynchronously(this,
-					new Runnable() {
-						public void run() {
-							RCChat.this.playerListener.onPlayerChat(e);
-						}
-					});
+			p.chat(args2str(args));
+//			Set<Player> nullSetPlayer = new HashSet<Player>();
+//			nullSetPlayer.add(p);
+//			final AsyncPlayerChatEvent e = new AsyncPlayerChatEvent(true, p,
+//					args2str(args), nullSetPlayer);
+//			e.setFormat("  %1$s  %2$s");
+//			getServer().getScheduler().runTaskAsynchronously(this,
+//					new Runnable() {
+//						public void run() {
+//							RCChat.this.playerListener.onPlayerChat(e);
+//						}
+//					});
 			return true;
 		}
 //		if (commandLabel.equalsIgnoreCase("jc")) {
@@ -846,9 +855,13 @@ public class RCChat extends JavaPlugin {
 //		return Channel.muted.get(p);
 	}
 
-	public void fromRunnable(Player p, String format, String message) {
-		if (isMuted(p))
+	public void fromRunnable(AsyncPlayerChatEvent e) {
+		Player p = e.getPlayer();
+		if (isMuted(p)){
+			e.getRecipients().clear();
+			e.setCancelled(true);
 			return;
+		}
 		if (!p.hasPermission("rcchat.m")){
 			BaseChannel b;
 			if (isJailed(p.getLocation()))
@@ -887,7 +900,7 @@ public class RCChat extends JavaPlugin {
 			addPlayerDefault(p);
 			c = pContains(p);
 		}
-		c.sendMessage(p, format, message);
+		c.sendMessage(e);
 	}
 
 	public static ArrayList<String> getWeb() {

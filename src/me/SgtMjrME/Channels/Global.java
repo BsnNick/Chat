@@ -1,9 +1,7 @@
 package me.SgtMjrME.Channels;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 import me.SgtMjrME.Perm;
 import me.SgtMjrME.RCChat;
@@ -11,6 +9,7 @@ import me.SgtMjrME.RCChat;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 public class Global extends BaseChannel {
 
@@ -33,11 +32,14 @@ public class Global extends BaseChannel {
 	}
 
 	@Override
-	void getDestination(Player p, String format, String message) {
+	void getDestination(AsyncPlayerChatEvent e) {
 		// First, check if player has perms
+		Player p = e.getPlayer();
 		Perm perm = RCChat.getPerm(p);
 		if (!perm.hasPerm(4)) {
 			p.sendMessage(getPermErr());
+			e.getRecipients().clear();
+			e.setCancelled(true);
 			return;
 		}
 		
@@ -45,13 +47,14 @@ public class Global extends BaseChannel {
 		//Note: This is probably INCREDIBLY thread unsafe
 		//As such, will probably have to change
 		//However... just makes my code SOOO clean :(
-		List<Player> players = new ArrayList<Player>(p.getWorld().getPlayers());
-		Iterator<Player> i = players.iterator();
+		e.getRecipients().clear();
+		e.getRecipients().addAll(p.getWorld().getPlayers());
+		Iterator<Player> i = e.getRecipients().iterator();
 		while(i.hasNext()){
 			if (!RCChat.getPerm(i.next()).hasPerm(17))
 				i.remove();
 		}
-		receiveDestination(players, p, format, message);
+		receiveDestination(e);
 	}
 
 }

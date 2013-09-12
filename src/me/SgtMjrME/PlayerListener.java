@@ -44,8 +44,7 @@ public class PlayerListener implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onPlayerChat(AsyncPlayerChatEvent e) {
-		e.setCancelled(true);
-		this.pl.fromRunnable(e.getPlayer(), e.getFormat(), e.getMessage());
+		this.pl.fromRunnable(e);
 	}
 
 //	@EventHandler(priority = EventPriority.LOWEST)

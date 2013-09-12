@@ -2,7 +2,6 @@ package me.SgtMjrME.Channels;
 
 import java.io.IOException;
 import java.util.Iterator;
-import java.util.List;
 
 import me.SgtMjrME.Perm;
 import me.SgtMjrME.RCChat;
@@ -10,6 +9,7 @@ import me.SgtMjrME.RCChat;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.bukkit.towny.object.TownyUniverse;
@@ -35,32 +35,35 @@ public class TownyChat extends BaseChannel {
 	}
 
 	@Override
-	void getDestination(Player p, String format, String message) {
+	void getDestination(AsyncPlayerChatEvent e) {
 		// First, check if player has perms
+		Player p = e.getPlayer();
 		Perm perm = RCChat.getPerm(p);
 		if (!perm.hasPerm(22)) {
 			p.sendMessage(getPermErr());
+			e.getRecipients().clear();
+			e.setCancelled(true);
 			return;
 		}
 
-		List<Player> players;
+		e.getRecipients().clear();
 		try {
-			players = TownyUniverse.getOnlinePlayers(
-					TownyUniverse.getDataSource().getResident(p.getName()).getTown());
-		} catch (NotRegisteredException e) {
+			 e.getRecipients().addAll(TownyUniverse.getOnlinePlayers(
+					TownyUniverse.getDataSource().getResident(p.getName()).getTown()));
+		} catch (NotRegisteredException ex) {
 			p.sendMessage(ChatColor.RED + "Error displaying message, Towny Town not found");
 			return;
 		}
 		
 
 		// Remove non-permission
-		Iterator<Player> i = players.iterator();
+		Iterator<Player> i = e.getRecipients().iterator();
 		while (i.hasNext()) {
 			if (!RCChat.getPerm(i.next()).hasPerm(23))
 				i.remove();
 		}
 		// send
-		receiveDestination(players, p, format, message);
+		receiveDestination(e);
 	}
 
 }

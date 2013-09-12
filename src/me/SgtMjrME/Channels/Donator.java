@@ -1,10 +1,7 @@
 package me.SgtMjrME.Channels;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
-import java.util.List;
 
 import me.SgtMjrME.Perm;
 import me.SgtMjrME.RCChat;
@@ -12,6 +9,7 @@ import me.SgtMjrME.RCChat;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 public class Donator extends BaseChannel {
 
@@ -33,28 +31,32 @@ public class Donator extends BaseChannel {
 	}
 
 	@Override
-	void getDestination(Player p, String format, String message) {
+	void getDestination(AsyncPlayerChatEvent e) {
+		Player p = e.getPlayer();
 		p.sendMessage(ChatColor.RED + "DC is being phased out, please use sc");
 		
 		// First, check if player has perms
 		Perm perm = RCChat.getPerm(p);
 		if (!perm.hasPerm(3)) {
 			p.sendMessage(getPermErr());
+			e.getRecipients().clear();
+			e.setCancelled(true);
 			return;
 		}
 
-		// Questionable call, never used aslist
-		List<Player> players = new ArrayList<Player>(Arrays.asList(pl
-				.getServer().getOnlinePlayers()));
+//		// Questionable call, never used aslist
+//		List<Player> players = new ArrayList<Player>(Arrays.asList(pl
+//				.getServer().getOnlinePlayers()));
 
 		// Remove non-permission
-		Iterator<Player> i = players.iterator();
+		Iterator<Player> i = e.getRecipients().iterator();
 		while (i.hasNext()) {
 			if (!RCChat.getPerm(i.next()).hasPerm(17))
 				i.remove();
 		}
+		
 		// send
-		receiveDestination(players, p, format, message);
+		receiveDestination(e);
 	}
 
 }

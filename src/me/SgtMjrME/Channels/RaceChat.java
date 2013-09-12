@@ -1,9 +1,7 @@
 package me.SgtMjrME.Channels;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 import me.SgtMjrME.Perm;
 import me.SgtMjrME.RCChat;
@@ -13,6 +11,7 @@ import me.SgtMjrME.Object.WarPlayers;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 public class RaceChat extends BaseChannel {
 
@@ -34,23 +33,28 @@ public class RaceChat extends BaseChannel {
 	}
 
 	@Override
-	void getDestination(Player p, String format, String message) {
+	void getDestination(AsyncPlayerChatEvent e) {
 		// First, check if player has perms
+		Player p = e.getPlayer();
 		Perm perm = RCChat.getPerm(p);
 		if (!perm.hasPerm(6)) {
 			p.sendMessage(getPermErr());
+			e.getRecipients().clear();
+			e.setCancelled(true);
 			return;
 		}
 		
 		Race r = WarPlayers.getRace(p);
 		if (r == null){
 			p.sendMessage(getOtherErr());
+			e.getRecipients().clear();
+			e.setCancelled(true);
 			return;
 		}
-		List<Player> players = new ArrayList<Player>();
 		Iterator<String> it = WarPlayers.listPlayers();
 		String pstring;
 		Player player;
+		e.getRecipients().clear();
 		while (it.hasNext()) {
 			pstring = (String) it.next();
 			player = pl.getServer().getPlayer(pstring);
@@ -58,13 +62,13 @@ public class RaceChat extends BaseChannel {
 				r = WarPlayers.getRace(player);
 				if (r.equals(WarPlayers.getRace(p))
 						&& RCChat.getPerm(player).hasPerm(19))
-					players.add(player);
+					e.getRecipients().add(player);
 			}
 			else it.remove();
 		}
 
 		// send
-		receiveDestination(players, p, format, message);
+		receiveDestination(e);
 	}
 
 }

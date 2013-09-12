@@ -1,8 +1,6 @@
 package me.SgtMjrME.Channels;
 
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 import me.SgtMjrME.Perm;
 import me.SgtMjrME.RCChat;
@@ -13,6 +11,7 @@ import me.SgtMjrME.Object.WarPlayers;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 public abstract class BaseChannel {
 
@@ -30,52 +29,44 @@ public abstract class BaseChannel {
 
 	// Decides whom the message is going to be sent to
 	// MUST send to receiveDestination, either sync or async
-	abstract void getDestination(final Player p, String format, String message);
+	abstract void getDestination(AsyncPlayerChatEvent e);
 
 	// Changes the message to include proper formatting
-	String alterMessage(Player p, String f, String s) {
-		Perm perm = RCChat.getPerm(p);
-		f = setFormat(p, f);
-		s = setMessage(perm, s);
-		f = f.replace("%2$s", s);
-		return f;
+	void alterMessage(AsyncPlayerChatEvent e) {
+		Perm perm = RCChat.getPerm(e.getPlayer());
+		e.setFormat(setFormat(e.getPlayer(), e.getFormat()));
+		e.setMessage(setMessage(perm, e.getMessage()));
 	}
 
 	// Continues from getDestination (due to return stuff)
-	void receiveDestination(List<Player> players, Player player, String format,
-			String message) {
-		if (players == null) {
+	void receiveDestination(AsyncPlayerChatEvent e) {
+		Player p = e.getPlayer();
+		if (e.getRecipients() == null) {
 			// Some reason it didn't work, I'll assume perms (easier to
 			// diagnose)
-			player.sendMessage(permErr);
+			p.sendMessage(permErr);
+			e.setCancelled(true);
 			return;
-		} else if (players.isEmpty()) {
-			player.sendMessage(otherErr);
+		} else if (e.getRecipients().isEmpty()) {
+			p.sendMessage(otherErr);
 			String debugMes = ChatColor.WHITE + "[RCCD ERR] "
-					+ player.getName() + " " + format + " " + message;
-			for (Player p : Channel.debugPlayers)
-				p.sendMessage(debugMes);
+					+ p.getName() + " " + e.getFormat() + " " + e.getMessage();
+			for (Player player : Channel.debugPlayers)
+				player.sendMessage(debugMes);
+			e.setCancelled(true);
+			return;
 		}
-		String out = alterMessage(player, format, message);
-		List<Player> debug = new ArrayList<Player>();
-		for (Player p : Channel.debugPlayers)
-			debug.add(p);
-		for (Player p : players) {
-			if (debug.contains(p.getName())) {
-				debug.remove(p);
-			}
-			p.sendMessage(out);
-		}
-		String debugMes = ChatColor.WHITE + "[RCCD] " + player.getName()
-					 + " " + out;
-		for (Player p : debug) {
-			p.sendMessage(debugMes);
+		alterMessage(e);
+		String debugMes = ChatColor.WHITE + "[RCCD] " + this.getDisp() + " "+ e.getPlayer().getName()
+					 + " " + e.getMessage();
+		for (Player pl : Channel.debugPlayers) {
+			if (!p.getName().equals(pl.getName())) pl.sendMessage(debugMes);
 		}
 	}
 
 	// Sends the message out
-	public void sendMessage(Player player, String format, String message) {
-		getDestination(player, format, message);
+	public void sendMessage(AsyncPlayerChatEvent e) {
+		getDestination(e);
 	}
 
 	public String getName() {
@@ -147,8 +138,8 @@ public abstract class BaseChannel {
 //			s = s.replace("%1$s", p.getDisplayName() + " "
 //					+ GuildPlayer.getPlayer(p).getRank().getSuffix() + "&r");
 //			s = s.replaceAll("(&([a-f0-9 r]))", "§$2");
-		} else {
-			s = s.replace("%1$s", p.getDisplayName());
+//		} else {
+//			s = s.replace("%1$s", p.getDisplayName());
 		}
 		if (RCChat.factionWorld != null && Util.inFactions(p) && useTag){
 			s = FactionHelper.format(s,p);

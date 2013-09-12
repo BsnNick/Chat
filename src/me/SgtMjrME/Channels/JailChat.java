@@ -1,16 +1,14 @@
 package me.SgtMjrME.Channels;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
-import java.util.List;
 
 import me.SgtMjrME.RCChat;
 
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 public class JailChat extends BaseChannel{
 
@@ -32,21 +30,21 @@ public class JailChat extends BaseChannel{
 	}
 	
 	@Override
-	void getDestination(Player p, String format, String message) {
+	void getDestination(AsyncPlayerChatEvent e) {
 
-		// Questionable call, never used aslist
-		List<Player> players = new ArrayList<Player>(Arrays.asList(pl
-				.getServer().getOnlinePlayers()));
+//		// Questionable call, never used aslist
+//		List<Player> players = new ArrayList<Player>(Arrays.asList(pl
+//				.getServer().getOnlinePlayers()));
 		
 		// Remove non-permission
-		Iterator<Player> i = players.iterator();
+		Iterator<Player> i = e.getRecipients().iterator();
 		while (i.hasNext()) {
 			if (!RCChat.getPerm(i.next()).hasPerm(1))
 				i.remove();
 		}
-		players.add(p);
+//		players.add(p);
 		// send
-		receiveDestination(players, p, format, message);
+		receiveDestination(e);
 	}
 	
 	@Override

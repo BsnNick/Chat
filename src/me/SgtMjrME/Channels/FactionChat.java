@@ -1,9 +1,7 @@
 package me.SgtMjrME.Channels;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 import me.SgtMjrME.Perm;
 import me.SgtMjrME.RCChat;
@@ -11,6 +9,7 @@ import me.SgtMjrME.RCChat;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
@@ -36,8 +35,9 @@ public class FactionChat extends BaseChannel {
 	}
 
 	@Override
-	void getDestination(Player p, String format, String message) {
+	void getDestination(AsyncPlayerChatEvent e) {
 		// First, check if player has perms
+		Player p = e.getPlayer();
 		Perm perm = RCChat.getPerm(p);
 		if (!perm.hasPerm(20)) {
 			p.sendMessage(getPermErr());
@@ -48,19 +48,22 @@ public class FactionChat extends BaseChannel {
 		FPlayer fp = FPlayers.i.get(p);
 		if (fp == null || fp.getFaction() == null){
 			p.sendMessage(getOtherErr());
+			e.getRecipients().clear();
+			e.setCancelled(true);
 			return;
 		}
 		
-		List<Player> players = new ArrayList<Player>(fp.getFaction().getOnlinePlayers());
+		e.getRecipients().clear();
+		e.getRecipients().addAll(fp.getFaction().getOnlinePlayers());
 
 		// Remove non-permission
-		Iterator<Player> i = players.iterator();
+		Iterator<Player> i = e.getRecipients().iterator();
 		while (i.hasNext()) {
 			if (!RCChat.getPerm(i.next()).hasPerm(21))
 				i.remove();
 		}
 		// send
-		receiveDestination(players, p, format, message);
+		receiveDestination(e);
 	}
 
 }
