@@ -38,11 +38,10 @@ public class Channel {
 	public static void loadChannels(RCChat pl) {
 		channels.putIfAbsent("l", new Local(pl));
 		channels.putIfAbsent("g", new Global(pl));
-		channels.putIfAbsent("dc", new Donator(pl));
+		channels.putIfAbsent("dc", new VIP(pl));
 		channels.putIfAbsent("m", new Mod(pl));
 		channels.putIfAbsent("me", new Me(pl));
 		channels.putIfAbsent("jc", new JailChat(pl));
-		channels.putIfAbsent("sc", new ServerChat(pl));
 		if (pl.getServer().getPluginManager().isPluginEnabled("Factions")){
 			channels.putIfAbsent("fc", new FactionChat(pl));
 		}

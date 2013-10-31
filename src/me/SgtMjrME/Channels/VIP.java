@@ -11,11 +11,11 @@ import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
-public class Donator extends BaseChannel {
+public class VIP extends BaseChannel {
 
 	final RCChat pl;
 
-	public Donator(RCChat pl) {
+	public VIP(RCChat pl) {
 		this.pl = pl;
 		try {
 			cfg.load(pl.getDataFolder().getAbsolutePath() + "/channels/dc.yml");
