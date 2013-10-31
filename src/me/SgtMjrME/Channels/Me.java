@@ -55,4 +55,9 @@ public class Me extends BaseChannel {
 		//send
 		receiveDestination(e);
 	}
+
+	@Override
+	public int getPerm() {
+		return 2;
+	}
 }

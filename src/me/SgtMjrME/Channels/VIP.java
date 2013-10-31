@@ -18,7 +18,7 @@ public class VIP extends BaseChannel {
 	public VIP(RCChat pl) {
 		this.pl = pl;
 		try {
-			cfg.load(pl.getDataFolder().getAbsolutePath() + "/channels/dc.yml");
+			cfg.load(pl.getDataFolder().getAbsolutePath() + "/channels/vip.yml");
 			setName(cfg.getString("name"));
 			setDisp(cfg.getString("disp"));
 			setPermission(cfg.getString("permission"));
@@ -33,7 +33,6 @@ public class VIP extends BaseChannel {
 	@Override
 	void getDestination(AsyncPlayerChatEvent e) {
 		Player p = e.getPlayer();
-		p.sendMessage(ChatColor.RED + "DC is being phased out, please use sc");
 		
 		// First, check if player has perms
 		Perm perm = RCChat.getPerm(p);
@@ -57,6 +56,11 @@ public class VIP extends BaseChannel {
 		
 		// send
 		receiveDestination(e);
+	}
+
+	@Override
+	public int getPerm() {
+		return 3;
 	}
 
 }

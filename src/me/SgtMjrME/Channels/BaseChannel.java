@@ -66,6 +66,24 @@ public abstract class BaseChannel {
 
 	// Sends the message out
 	public void sendMessage(AsyncPlayerChatEvent e) {
+		if (RCChat.instance.pm.isPluginEnabled("RCWars") && this instanceof RaceChat){
+			e.getPlayer().sendMessage(ChatColor.RED + "You are not in Wars");
+			e.getRecipients().clear();
+			e.setCancelled(true);
+			return;
+		}
+		if (RCChat.instance.pm.isPluginEnabled("Factions") && this instanceof FactionChat){
+			e.getPlayer().sendMessage(ChatColor.RED + "You are not in Factions");
+			e.getRecipients().clear();
+			e.setCancelled(true);
+			return;
+		}
+		if (RCChat.instance.pm.isPluginEnabled("Towny") && (this instanceof TownyChat || this instanceof NationChat)){
+			e.getPlayer().sendMessage(ChatColor.RED + "You are not in Towny");
+			e.getRecipients().clear();
+			e.setCancelled(true);
+			return;
+		}
 		getDestination(e);
 	}
 
@@ -208,5 +226,7 @@ public abstract class BaseChannel {
 	public boolean isJail() {
 		return false;
 	}
+
+	abstract public int getPerm();
 
 }

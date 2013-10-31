@@ -13,7 +13,7 @@ public class Perm {
 		this.perms.add(p.hasPermission("rcchat.*"));// 0
 		this.perms.add(p.hasPermission("rcchat.m"));// 1
 		this.perms.add(p.hasPermission("rcchat.me"));// 2
-		this.perms.add(p.hasPermission("rcchat.dc"));// 3
+		this.perms.add(p.hasPermission("rcchat.vip"));// 3
 		this.perms.add(p.hasPermission("rcchat.g"));// 4
 		this.perms.add(p.hasPermission("rcchat.l"));// 5
 		this.perms.add(p.hasPermission("rcchat.rc"));// 6
@@ -26,7 +26,7 @@ public class Perm {
 		this.perms.add(p.hasPermission("rcchat.mute"));// 13
 		this.perms.add(p.hasPermission("rcchat.msee"));// 14
 		this.perms.add(p.hasPermission("rcchat.mesee"));// 15
-		this.perms.add(p.hasPermission("rcchat.dcsee"));// 16
+		this.perms.add(p.hasPermission("rcchat.vipsee"));// 16
 		this.perms.add(p.hasPermission("rcchat.gsee"));// 17
 		this.perms.add(p.hasPermission("rcchat.lsee"));// 18
 		this.perms.add(p.hasPermission("rcchat.rcsee"));// 19

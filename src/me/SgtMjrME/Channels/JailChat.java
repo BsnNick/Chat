@@ -52,4 +52,9 @@ public class JailChat extends BaseChannel{
 		return true;
 	}
 
+	@Override
+	public int getPerm() {
+		return 5;
+	}
+
 }

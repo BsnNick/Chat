@@ -71,4 +71,9 @@ public class RaceChat extends BaseChannel {
 		receiveDestination(e);
 	}
 
+	@Override
+	public int getPerm() {
+		return 6;
+	}
+
 }

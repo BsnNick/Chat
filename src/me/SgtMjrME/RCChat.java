@@ -11,7 +11,6 @@ import java.util.logging.Logger;
 
 import me.SgtMjrME.Channels.BaseChannel;
 import me.SgtMjrME.Channels.Channel;
-import me.SgtMjrME.Object.WarPlayers;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -180,439 +179,6 @@ public class RCChat extends JavaPlugin {
 			}
 			return true;
 		}
-		if (commandLabel.equalsIgnoreCase("g")) {
-			BaseChannel c = Channel.get("g");
-			if (c == null){
-				p.sendMessage(ChatColor.RED + "Channel not found");
-				return true;
-			}
-			if (!perm.hasPerm(4)) {
-					p.sendMessage(ChatColor.RED + c.getPermErr());
-					return false;
-				}
-			if (args.length == 0) {
-				Channel.pChannels.put(p, c);
-				p.sendMessage(ChatColor.GREEN
-						+ "Chat set to "
-						+ ChatColor.translateAlternateColorCodes('&',
-								c.getDisp()));
-				return true;
-			}
-			Channel.tempChannel.put(p, c);
-//			Set<Player> nullSetPlayer = new HashSet<Player>();
-//			nullSetPlayer.add(p);
-//			final AsyncPlayerChatEvent e = new AsyncPlayerChatEvent(true, p,
-//					args2str(args), nullSetPlayer);
-//			e.setFormat("  %1$s  %2$s");
-			p.chat(args2str(args));
-//			getServer().getScheduler().runTaskAsynchronously(this,
-//					new Runnable() {
-//						public void run() {
-//							RCChat.this.playerListener.onPlayerChat(e);
-//						}
-//					});
-			return true;
-		}
-		if (commandLabel.equalsIgnoreCase("l")) {
-			BaseChannel c = Channel.get("l");
-			if (c == null){
-				p.sendMessage(ChatColor.RED + "Channel not found");
-				return true;
-			}
-			if (!perm.hasPerm(5)) {
-					p.sendMessage(ChatColor.RED + c.getPermErr());
-					return false;
-				}
-			if (args.length == 0) {
-				Channel.pChannels.put(p, c);
-				p.sendMessage(ChatColor.GREEN
-						+ "Chat set to "
-						+ ChatColor.translateAlternateColorCodes('&',
-								c.getDisp()));
-				return true;
-			}
-			Channel.tempChannel.put(p, c);
-			p.chat(args2str(args));
-//			Set<Player> nullSetPlayer = new HashSet<Player>();
-//			nullSetPlayer.add(p);
-//			final AsyncPlayerChatEvent e = new AsyncPlayerChatEvent(true, p,
-//					args2str(args), nullSetPlayer);
-//			e.setFormat("  %1$s  %2$s");
-//			getServer().getScheduler().runTaskAsynchronously(this,
-//					new Runnable() {
-//						public void run() {
-//							RCChat.this.playerListener.onPlayerChat(e);
-//						}
-//					});
-			return true;
-		}
-		if (commandLabel.equalsIgnoreCase("dc")) {
-			BaseChannel c = Channel.get("dc");
-			if (c == null){
-				p.sendMessage(ChatColor.RED + "Channel not found");
-				return true;
-			}
-			if (!perm.hasPerm(3)) {
-					p.sendMessage(ChatColor.RED + c.getPermErr());
-					return false;
-				}
-			if (args.length == 0) {
-				Channel.pChannels.put(p, c);
-				p.sendMessage(ChatColor.GREEN
-						+ "Chat set to "
-						+ ChatColor.translateAlternateColorCodes('&',
-								c.getDisp()));
-				return true;
-			}
-			Channel.tempChannel.put(p, c);
-			p.chat(args2str(args));
-//			Set<Player> nullSetPlayer = new HashSet<Player>();
-//			nullSetPlayer.add(p);
-//			final AsyncPlayerChatEvent e = new AsyncPlayerChatEvent(true, p,
-//					args2str(args), nullSetPlayer);
-//			e.setFormat("  %1$s  %2$s");
-//			getServer().getScheduler().runTaskAsynchronously(this,
-//					new Runnable() {
-//						public void run() {
-//							playerListener.onPlayerChat(e);
-//						}
-//					});
-			return true;
-		}
-		if (commandLabel.equalsIgnoreCase("sc")) {
-			BaseChannel c = Channel.get("sc");
-			if (c == null){
-				p.sendMessage(ChatColor.RED + "Channel not found");
-				return true;
-			}
-			if (!perm.hasPerm(3)) {
-					p.sendMessage(ChatColor.RED + c.getPermErr());
-					return false;
-				}
-			if (args.length == 0) {
-				Channel.pChannels.put(p, c);
-				p.sendMessage(ChatColor.GREEN
-						+ "Chat set to "
-						+ ChatColor.translateAlternateColorCodes('&',
-								c.getDisp()));
-				return true;
-			}
-			Channel.tempChannel.put(p, c);
-			p.chat(args2str(args));
-//			Set<Player> nullSetPlayer = new HashSet<Player>();
-//			nullSetPlayer.add(p);
-//			final AsyncPlayerChatEvent e = new AsyncPlayerChatEvent(true, p,
-//					args2str(args), nullSetPlayer);
-//			e.setFormat("  %1$s  %2$s");
-//			getServer().getScheduler().runTaskAsynchronously(this,
-//					new Runnable() {
-//						public void run() {
-//							playerListener.onPlayerChat(e);
-//						}
-//					});
-			return true;
-		}
-		if (commandLabel.equalsIgnoreCase("me")) {
-			BaseChannel c = Channel.get("me");
-			if (c == null){
-				p.sendMessage(ChatColor.RED + "Channel not found");
-				return true;
-			}
-			if (!perm.hasPerm(2)) {
-				p.sendMessage(ChatColor.RED + c.getPermErr());
-				return false;
-			}
-			if (args.length == 0) {
-				Channel.pChannels.put(p, c);
-				p.sendMessage(ChatColor.GREEN
-						+ "Chat set to "
-						+ ChatColor.translateAlternateColorCodes('&',
-								c.getDisp()));
-				return true;
-			}
-			Channel.tempChannel.put(p, c);
-			p.chat(args2str(args));
-//			Set<Player> nullSetPlayer = new HashSet<Player>();
-//			nullSetPlayer.add(p);
-//			final AsyncPlayerChatEvent e = new AsyncPlayerChatEvent(true, p,
-//					args2str(args), nullSetPlayer);
-//			e.setFormat("  %1$s  %2$s");
-//			getServer().getScheduler().runTaskAsynchronously(this,
-//					new Runnable() {
-//						public void run() {
-//							RCChat.this.playerListener.onPlayerChat(e);
-//						}
-//					});
-			return true;
-		}
-		if (commandLabel.equalsIgnoreCase("m")) {
-			BaseChannel c = Channel.get("m");
-			if (c == null){
-				p.sendMessage(ChatColor.RED + "Channel not found");
-				return true;
-			}
-			if (!perm.hasPerm(1)) {
-					p.sendMessage(ChatColor.RED + c.getPermErr());
-					return false;
-				}
-			if (args.length == 0) {
-				Channel.pChannels.put(p, c);
-				p.sendMessage(ChatColor.GREEN
-						+ "Chat set to "
-						+ ChatColor.translateAlternateColorCodes('&',
-								c.getDisp()));
-				return true;
-			}
-			Channel.tempChannel.put(p, c);
-			p.chat(args2str(args));
-//			Set<Player> nullSetPlayer = new HashSet<Player>();
-//			nullSetPlayer.add(p);
-//			final AsyncPlayerChatEvent e = new AsyncPlayerChatEvent(true, p,
-//					args2str(args), nullSetPlayer);
-//			e.setFormat("  %1$s  %2$s");
-//			getServer().getScheduler().runTaskAsynchronously(this,
-//					new Runnable() {
-//						public void run() {
-//							RCChat.this.playerListener.onPlayerChat(e);
-//						}
-//					});
-			return true;
-		}
-		if (commandLabel.equalsIgnoreCase("rc")) {
-			if (!this.pm.isPluginEnabled("RCWars") || 
-					WarPlayers.getRace(p) == null) {
-				p.sendMessage(ChatColor.RED + "You are not in Wars");
-				return false;
-			}
-			BaseChannel c = Channel.get("rc");
-			if (c == null){
-				p.sendMessage(ChatColor.RED + "Channel not found");
-				return true;
-			}
-			if (!perm.hasPerm(6)) {
-					p.sendMessage(ChatColor.RED + c.getPermErr());
-					return false;
-				}
-			if (args.length == 0) {
-				Channel.pChannels.put(p, c);
-				p.sendMessage(ChatColor.GREEN
-						+ "Chat set to "
-						+ ChatColor.translateAlternateColorCodes('&',
-								c.getDisp()));
-				return true;
-			}
-			Channel.tempChannel.put(p, c);
-			p.chat(args2str(args));
-//			Set<Player> nullSetPlayer = new HashSet<Player>();
-//			nullSetPlayer.add(p);
-//			final AsyncPlayerChatEvent e = new AsyncPlayerChatEvent(true, p,
-//					args2str(args), nullSetPlayer);
-//			e.setFormat("  %1$s  %2$s");
-//			getServer().getScheduler().runTaskAsynchronously(this,
-//					new Runnable() {
-//						public void run() {
-//							RCChat.this.playerListener.onPlayerChat(e);
-//						}
-//					});
-			return true;
-		}
-		if (commandLabel.equalsIgnoreCase("fc")) {
-			if (!this.pm.isPluginEnabled("Factions")) {
-				p.sendMessage(ChatColor.RED + "You are not in Factions");
-				return false;
-			}
-			BaseChannel c = Channel.get("fc");
-			if (c == null){
-				p.sendMessage(ChatColor.RED + "Channel not found");
-				return true;
-			}
-			if (!perm.hasPerm(20)) {
-					p.sendMessage(ChatColor.RED + c.getPermErr());
-					return false;
-				}
-			if (args.length == 0) {
-				Channel.pChannels.put(p, c);
-				p.sendMessage(ChatColor.GREEN
-						+ "Chat set to "
-						+ ChatColor.translateAlternateColorCodes('&',
-								c.getDisp()));
-				return true;
-			}
-			Channel.tempChannel.put(p, c);
-			p.chat(args2str(args));
-//			Set<Player> nullSetPlayer = new HashSet<Player>();
-//			nullSetPlayer.add(p);
-//			final AsyncPlayerChatEvent e = new AsyncPlayerChatEvent(true, p,
-//					args2str(args), nullSetPlayer);
-//			e.setFormat("  %1$s  %2$s");
-//			getServer().getScheduler().runTaskAsynchronously(this,
-//					new Runnable() {
-//						public void run() {
-//							RCChat.this.playerListener.onPlayerChat(e);
-//						}
-//					});
-			return true;
-		}
-		if (commandLabel.equalsIgnoreCase("twc")) {
-			if (!this.pm.isPluginEnabled("Towny")) {
-				p.sendMessage(ChatColor.RED + "You are not in the Survival server");
-				return false;
-			}
-			BaseChannel c = Channel.get("twc");
-			if (c == null){
-				p.sendMessage(ChatColor.RED + "Channel not found");
-				return true;
-			}
-			if (!perm.hasPerm(22)) {
-					p.sendMessage(ChatColor.RED + c.getPermErr());
-					return false;
-				}
-			if (args.length == 0) {
-				Channel.pChannels.put(p, c);
-				p.sendMessage(ChatColor.GREEN
-						+ "Chat set to "
-						+ ChatColor.translateAlternateColorCodes('&',
-								c.getDisp()));
-				return true;
-			}
-			Channel.tempChannel.put(p, c);
-			p.chat(args2str(args));
-//			Set<Player> nullSetPlayer = new HashSet<Player>();
-//			nullSetPlayer.add(p);
-//			final AsyncPlayerChatEvent e = new AsyncPlayerChatEvent(true, p,
-//					args2str(args), nullSetPlayer);
-//			e.setFormat("  %1$s  %2$s");
-//			getServer().getScheduler().runTaskAsynchronously(this,
-//					new Runnable() {
-//						public void run() {
-//							RCChat.this.playerListener.onPlayerChat(e);
-//						}
-//					});
-			return true;
-		}
-		if (commandLabel.equalsIgnoreCase("nc")) {
-			if (!this.pm.isPluginEnabled("Towny")) {
-				p.sendMessage(ChatColor.RED + "You are not in the Survival server");
-				return false;
-			}
-			BaseChannel c = Channel.get("nc");
-			if (c == null){
-				p.sendMessage(ChatColor.RED + "Channel not found");
-				return true;
-			}
-			if (!perm.hasPerm(22)) {
-					p.sendMessage(ChatColor.RED + c.getPermErr());
-					return false;
-				}
-			if (args.length == 0) {
-				Channel.pChannels.put(p, c);
-				p.sendMessage(ChatColor.GREEN
-						+ "Chat set to "
-						+ ChatColor.translateAlternateColorCodes('&',
-								c.getDisp()));
-				return true;
-			}
-			Channel.tempChannel.put(p, c);
-			p.chat(args2str(args));
-//			Set<Player> nullSetPlayer = new HashSet<Player>();
-//			nullSetPlayer.add(p);
-//			final AsyncPlayerChatEvent e = new AsyncPlayerChatEvent(true, p,
-//					args2str(args), nullSetPlayer);
-//			e.setFormat("  %1$s  %2$s");
-//			getServer().getScheduler().runTaskAsynchronously(this,
-//					new Runnable() {
-//						public void run() {
-//							RCChat.this.playerListener.onPlayerChat(e);
-//						}
-//					});
-			return true;
-		}
-//		if (commandLabel.equalsIgnoreCase("jc")) {
-//			BaseChannel c = Channel.get("jc");
-//			if (c == null){
-//				p.sendMessage(ChatColor.RED + "Channel not found");
-//				return true;
-//			}
-//			if (!perm.hasPerm(21)) {
-//					p.sendMessage(ChatColor.RED + c.getPermErr());
-//					return false;
-//				}
-//			if (args.length == 0) {
-//				Channel.pChannels.put(p, c);
-//				p.sendMessage(ChatColor.GREEN
-//						+ "Chat set to "
-//						+ ChatColor.translateAlternateColorCodes('&',
-//								c.getDisp()));
-//				return true;
-//			}
-//			Channel.tempChannel.put(p, c);
-//			Set<Player> nullSetPlayer = new HashSet<Player>();
-//			nullSetPlayer.add(p);
-//			final AsyncPlayerChatEvent e = new AsyncPlayerChatEvent(true, p,
-//					args2str(args), nullSetPlayer);
-//			e.setFormat("  %1$s  %2$s");
-//			getServer().getScheduler().runTaskAsynchronously(this,
-//					new Runnable() {
-//						public void run() {
-//							RCChat.this.playerListener.onPlayerChat(e);
-//						}
-//					});
-//			return true;
-//		}
-		if ((commandLabel.equalsIgnoreCase("setchannel")) && (perm.hasPerm(12))) {
-			if (args.length < 2)
-				return false;
-			Player temp = getServer().getPlayer(args[0]);
-			if (temp == null) {
-				p.sendMessage("Player not found");
-				return false;
-			}
-			BaseChannel c = Channel.get(args[1]);
-			if (c == null) {
-				p.sendMessage("Channel not found");
-				return false;
-			}
-			changePlayerChannel(p, c);
-		} else {
-			if ((commandLabel.equalsIgnoreCase("chatmute"))
-					&& (perm.hasPerm(13))) {
-				if (args.length < 1)
-					return false;
-				Player temp = getServer().getPlayer(args[0]);
-				if (temp == null) {
-					p.sendMessage("Player not found");
-					return false;
-				}
-				if ((Channel.muted.get(temp) != null)
-						&& (((Boolean) Channel.muted.get(temp)))) {
-					p.sendMessage("Player already muted");
-				} else {
-					Channel.muted.put(temp, true);
-					temp.sendMessage(ChatColor.RED + "You have been muted");
-					p.sendMessage("Player has been muted");
-				}
-				return true;
-			}
-			if ((commandLabel.equalsIgnoreCase("chatunmute"))
-					&& (perm.hasPerm(13))) {
-				if (args.length < 1)
-					return false;
-				Player temp = getServer().getPlayer(args[0]);
-				if (temp == null) {
-					p.sendMessage("Player not found");
-					return false;
-				}
-				if ((Channel.muted.get(temp) != null)
-						&& (!((Boolean) Channel.muted.get(temp)))) {
-					p.sendMessage("Player wasn't muted");
-				} else {
-					Channel.muted.put(temp, false);
-					temp.sendMessage(ChatColor.GREEN + "You have been unmuted");
-					p.sendMessage("Player has been unmuted");
-				}
-				return true;
-			}
-		}
 		if (commandLabel.equalsIgnoreCase("chatperms") && p.hasPermission("rcchat.seeperms")){
 			if (args.length == 0) 
 				perm.displayPerms(p);
@@ -629,13 +195,44 @@ public class RCChat extends JavaPlugin {
 					p.sendMessage("Player not found");
 				}
 			}
-		}
-		if (commandLabel.equalsIgnoreCase("setjailarea") && p.hasPermission("rcchat.admin")){
+		} else if (commandLabel.equalsIgnoreCase("setjailarea") && p.hasPermission("rcchat.admin")){
 			jailLL=null;
 			jailUR=null;
 			playerListener.jailSetter = p.getName();
 			p.sendMessage(ChatColor.GREEN + "Setting jail area");
+		} else if ((commandLabel.equalsIgnoreCase("setchannel")) && (perm.hasPerm(12))) {
+			if (args.length < 2)
+				return false;
+			Player temp = getServer().getPlayer(args[0]);
+			if (temp == null) {
+				p.sendMessage("Player not found");
+				return false;
+			}
+			BaseChannel c = Channel.get(args[1]);
+			if (c == null) {
+				p.sendMessage("Channel not found");
+				return false;
+			}
+			changePlayerChannel(p, c);
 		}
+		BaseChannel c = Channel.get(commandLabel);
+		if (c == null) {
+			p.sendMessage(ChatColor.RED + "Channel not found");
+			return true;
+		}
+		if (!perm.hasPerm(c.getPerm())){
+			p.sendMessage(ChatColor.RED + c.getPermErr());
+			return false;
+		}
+		if (args.length == 0) {
+			Channel.pChannels.put(p, c);
+			p.sendMessage(ChatColor.GREEN + "Chat set to " 
+					+ ChatColor.translateAlternateColorCodes('&', 
+							c.getDisp()));
+			return true;
+		}
+		Channel.tempChannel.put(p, c);
+		p.chat(args2str(args));
 		return true;
 	}
 	

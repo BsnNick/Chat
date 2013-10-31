@@ -1,7 +1,7 @@
-name: RCChat
+name: RCChatVIP
 author: SgtMjrME
 main: me.SgtMjrME.RCChat
-version: 1.5
+version: 1.6
 description: Chat!!
 softdepend: [RCWars, Essentials, Factions, Towny]
 
@@ -16,10 +16,8 @@ commands:
         description: mod
     me:
         description: All world
-    dc:
-        description: donators
-    sc:
-        description: Server
+    vip:
+        description: VIP
     rc:
         description: race chat (requires RCWars)
     setchannel:

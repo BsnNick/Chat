@@ -38,7 +38,7 @@ public class Channel {
 	public static void loadChannels(RCChat pl) {
 		channels.putIfAbsent("l", new Local(pl));
 		channels.putIfAbsent("g", new Global(pl));
-		channels.putIfAbsent("dc", new VIP(pl));
+		channels.putIfAbsent("vip", new VIP(pl));
 		channels.putIfAbsent("m", new Mod(pl));
 		channels.putIfAbsent("me", new Me(pl));
 		channels.putIfAbsent("jc", new JailChat(pl));

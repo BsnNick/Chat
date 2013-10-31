@@ -57,4 +57,9 @@ public class Global extends BaseChannel {
 		receiveDestination(e);
 	}
 
+	@Override
+	public int getPerm() {
+		return 4;
+	}
+
 }

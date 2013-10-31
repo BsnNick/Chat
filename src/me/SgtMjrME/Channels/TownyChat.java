@@ -66,4 +66,9 @@ public class TownyChat extends BaseChannel {
 		receiveDestination(e);
 	}
 
+	@Override
+	public int getPerm() {
+		return 22;
+	}
+
 }

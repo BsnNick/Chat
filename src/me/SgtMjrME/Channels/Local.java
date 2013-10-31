@@ -101,4 +101,9 @@ public class Local extends BaseChannel {
 //		});
 	}
 
+	@Override
+	public int getPerm() {
+		return 5;
+	}
+
 }
