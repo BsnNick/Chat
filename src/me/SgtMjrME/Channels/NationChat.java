@@ -1,13 +1,11 @@
 package me.SgtMjrME.Channels;
 
-import java.io.IOException;
 import java.util.Iterator;
 
 import me.SgtMjrME.Perm;
 import me.SgtMjrME.RCChat;
 
 import org.bukkit.ChatColor;
-import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
@@ -17,22 +15,21 @@ import com.palmergames.bukkit.towny.object.TownyUniverse;
 
 public class NationChat extends BaseChannel {
 
-	final RCChat pl;
-
 	public NationChat(RCChat pl) {
-		this.pl = pl;
-		try {
-			cfg.load(pl.getDataFolder().getAbsolutePath() + "/channels/nc.yml");
-			setName(cfg.getString("name"));
-			setDisp(cfg.getString("disp"));
-			setPermission(cfg.getString("permission"));
-			setColor(ChatColor.valueOf(cfg.getString("chatColor")));
-			setPermErr(ChatColor.translateAlternateColorCodes('&', cfg.getString("permerr")));
-			setOtherErr(ChatColor.translateAlternateColorCodes('&', cfg.getString("othererr")));
-			setTag(true);
-		} catch (IOException | InvalidConfigurationException e) {
-			e.printStackTrace();
-		}
+		super(pl, "nc");
+//		this.pl = pl;
+//		try {
+//			cfg.load(pl.getDataFolder().getAbsolutePath() + "/channels/nc.yml");
+//			setName(cfg.getString("name"));
+//			setDisp(cfg.getString("disp"));
+//			setPermission(cfg.getString("permission"));
+//			setColor(ChatColor.valueOf(cfg.getString("chatColor")));
+//			setPermErr(ChatColor.translateAlternateColorCodes('&', cfg.getString("permerr")));
+//			setOtherErr(ChatColor.translateAlternateColorCodes('&', cfg.getString("othererr")));
+//			setTag(true);
+//		} catch (IOException | InvalidConfigurationException e) {
+//			e.printStackTrace();
+//		}
 	}
 	
 	@Override

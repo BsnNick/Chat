@@ -3,7 +3,7 @@ author: SgtMjrME
 main: me.SgtMjrME.RCChat
 version: 1.6
 description: Chat!!
-softdepend: [RCWars, Essentials, Factions, Towny]
+softdepend: [RCWars, Essentials, Factions, Towny, LilyPad-Connect]
 
 commands:
     onlinestaff:

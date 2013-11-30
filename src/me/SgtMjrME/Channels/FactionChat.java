@@ -1,13 +1,10 @@
 package me.SgtMjrME.Channels;
 
-import java.io.IOException;
 import java.util.Iterator;
 
 import me.SgtMjrME.Perm;
 import me.SgtMjrME.RCChat;
 
-import org.bukkit.ChatColor;
-import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
@@ -16,22 +13,22 @@ import com.massivecraft.factions.FPlayers;
 
 public class FactionChat extends BaseChannel {
 
-	final RCChat pl;
-
 	public FactionChat(RCChat pl) {
-		this.pl = pl;
-		try {
-			cfg.load(pl.getDataFolder().getAbsolutePath() + "/channels/fc.yml");
-			setName(cfg.getString("name"));
-			setDisp(cfg.getString("disp"));
-			setPermission(cfg.getString("permission"));
-			setColor(ChatColor.valueOf(cfg.getString("chatColor")));
-			setPermErr(ChatColor.translateAlternateColorCodes('&', cfg.getString("permerr")));
-			setOtherErr(ChatColor.translateAlternateColorCodes('&', cfg.getString("othererr")));
-			setTag(true);
-		} catch (IOException | InvalidConfigurationException e) {
-			e.printStackTrace();
-		}
+		super(pl, "fc");
+//		this.pl = pl;
+//		try {
+//			cfg.load(pl.getDataFolder().getAbsolutePath() + "/channels/fc.yml");
+//			setName(cfg.getString("name"));
+//			setDisp(cfg.getString("disp"));
+//			setPermission(cfg.getString("permission"));
+//			setColor(ChatColor.valueOf(cfg.getString("chatColor")));
+//			setPermErr(ChatColor.translateAlternateColorCodes('&', cfg.getString("permerr")));
+//			setOtherErr(ChatColor.translateAlternateColorCodes('&', cfg.getString("othererr")));
+//			setTag(true);
+//			setCrossServer(cfg.getBoolean("crossserver"));
+//		} catch (IOException | InvalidConfigurationException e) {
+//			e.printStackTrace();
+//		}
 	}
 
 	@Override

@@ -1,39 +1,37 @@
 package me.SgtMjrME.Channels;
 
-import java.io.IOException;
 import java.util.List;
 
 import me.SgtMjrME.Perm;
 import me.SgtMjrME.RCChat;
 
-import org.bukkit.ChatColor;
-import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 public class Local extends BaseChannel {
 
-	final RCChat pl;
 	int d;
 
 	public Local(RCChat pl) {
-		this.pl = pl;
-		try {
-			cfg.load(pl.getDataFolder().getAbsolutePath() + "/channels/l.yml");
-			setName(cfg.getString("name"));
-			setDisp(cfg.getString("disp"));
-			setPermission(cfg.getString("permission"));
-			setColor(ChatColor.valueOf(cfg.getString("chatColor")));
-			setPermErr(ChatColor.translateAlternateColorCodes('&',
-					cfg.getString("permerr")));
-			setOtherErr(ChatColor.translateAlternateColorCodes('&',
-					cfg.getString("othererr")));
-			d = cfg.getInt("distance");
-			setTag(true);
-		} catch (IOException | InvalidConfigurationException e) {
-			e.printStackTrace();
-		}
+		super(pl, "l");
+		this.d = cfg.getInt("distance");
+//		this.pl = pl;
+//		try {
+//			cfg.load(pl.getDataFolder().getAbsolutePath() + "/channels/l.yml");
+//			setName(cfg.getString("name"));
+//			setDisp(cfg.getString("disp"));
+//			setPermission(cfg.getString("permission"));
+//			setColor(ChatColor.valueOf(cfg.getString("chatColor")));
+//			setPermErr(ChatColor.translateAlternateColorCodes('&',
+//					cfg.getString("permerr")));
+//			setOtherErr(ChatColor.translateAlternateColorCodes('&',
+//					cfg.getString("othererr")));
+//			d = cfg.getInt("distance");
+//			setTag(true);
+//		} catch (IOException | InvalidConfigurationException e) {
+//			e.printStackTrace();
+//		}
 
 	}
 

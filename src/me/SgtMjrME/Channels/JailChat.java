@@ -1,32 +1,28 @@
 package me.SgtMjrME.Channels;
 
-import java.io.IOException;
 import java.util.Iterator;
 
 import me.SgtMjrME.RCChat;
 
-import org.bukkit.ChatColor;
-import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 public class JailChat extends BaseChannel{
 
-	RCChat pl;
-	
 	public JailChat(RCChat pl) {
-		this.pl = pl;
-		try {
-			cfg.load(pl.getDataFolder().getAbsolutePath() + "/channels/jc.yml");
-			setName(cfg.getString("name"));
-			setDisp(cfg.getString("disp"));
-			setPermission(cfg.getString("permission"));
-			setColor(ChatColor.valueOf(cfg.getString("chatColor")));
-			setPermErr(ChatColor.translateAlternateColorCodes('&', cfg.getString("permerr")));
-			setOtherErr(ChatColor.translateAlternateColorCodes('&', cfg.getString("othererr")));
-		} catch (IOException | InvalidConfigurationException e) {
-			e.printStackTrace();
-		}
+		super(pl, "jc");
+//		this.pl = pl;
+//		try {
+//			cfg.load(pl.getDataFolder().getAbsolutePath() + "/channels/jc.yml");
+//			setName(cfg.getString("name"));
+//			setDisp(cfg.getString("disp"));
+//			setPermission(cfg.getString("permission"));
+//			setColor(ChatColor.valueOf(cfg.getString("chatColor")));
+//			setPermErr(ChatColor.translateAlternateColorCodes('&', cfg.getString("permerr")));
+//			setOtherErr(ChatColor.translateAlternateColorCodes('&', cfg.getString("othererr")));
+//		} catch (IOException | InvalidConfigurationException e) {
+//			e.printStackTrace();
+//		}
 	}
 	
 	@Override

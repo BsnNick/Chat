@@ -1,5 +1,6 @@
 package me.SgtMjrME.Channels;
 
+import java.io.IOException;
 import java.util.Iterator;
 
 import me.SgtMjrME.Perm;
@@ -9,6 +10,7 @@ import me.SgtMjrME.ClassUpdate.WarRank;
 import me.SgtMjrME.Object.WarPlayers;
 
 import org.bukkit.ChatColor;
+import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
@@ -24,8 +26,27 @@ public abstract class BaseChannel {
 	private String otherErr = "Nobody can hear you :(";
 	YamlConfiguration cfg = new YamlConfiguration();
 	private boolean useTag = false;
+	private boolean isCrossServer = false;
+	RCChat pl;
 	
 	void setTag(boolean i){useTag = i;}
+	
+	public BaseChannel(RCChat pl, String s){
+		this.pl = pl;
+		try {
+			cfg.load(pl.getDataFolder().getAbsolutePath() + "/channels/" + s + ".yml");
+			setName(cfg.getString("name"));
+			setDisp(cfg.getString("disp"));
+			setPermission(cfg.getString("permission"));
+			setColor(ChatColor.valueOf(cfg.getString("chatColor")));
+			setPermErr(ChatColor.translateAlternateColorCodes('&', cfg.getString("permerr")));
+			setOtherErr(ChatColor.translateAlternateColorCodes('&', cfg.getString("othererr")));
+			setTag(true);
+			setCrossServer(cfg.getBoolean("crossserver", false));
+		} catch (IOException | InvalidConfigurationException e) {
+			e.printStackTrace();
+		}
+	}
 
 	// Decides whom the message is going to be sent to
 	// MUST send to receiveDestination, either sync or async
@@ -61,6 +82,9 @@ public abstract class BaseChannel {
 					 + " " + e.getMessage();
 		for (Player pl : Channel.debugPlayers) {
 			if (!p.getName().equals(pl.getName())) pl.sendMessage(debugMes);
+		}
+		if (this.isCrossServer && RCChat.lph != null){
+			RCChat.lph.sendMessage(this, e.getFormat().replace("%1$s", p.getName()) + e.getMessage());
 		}
 	}
 
@@ -225,6 +249,14 @@ public abstract class BaseChannel {
 
 	public boolean isJail() {
 		return false;
+	}
+	
+	public void setCrossServer(boolean bool){
+		isCrossServer = bool;
+	}
+	
+	public boolean isCrossServer(){
+		return isCrossServer;
 	}
 
 	abstract public int getPerm();

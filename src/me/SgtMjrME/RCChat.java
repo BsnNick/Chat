@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -44,6 +45,7 @@ public class RCChat extends JavaPlugin {
 	private static Location jailLL;
 	private static Location jailUR;
 	public static String townyTag;
+	public static LilyPadHandler lph = null;
 	
 	//Going to be used to see all player logins/logoffs.
 	public static boolean indebug = false;
@@ -65,6 +67,16 @@ public class RCChat extends JavaPlugin {
 		YamlConfiguration config = new YamlConfiguration();
 		try {
 			config.load(getDataFolder() + "/config.yml");
+			if (getServer().getPluginManager().isPluginEnabled("LilyPad-Connect")){
+				List<String> servers = new ArrayList<String>();
+				String[] str = config.getString("servers", "").split(",");
+				if (str.length != 0 && str[0] != ""){
+					for(String s : str){
+						servers.add(s);
+					}
+					lph = new LilyPadHandler(this, servers);
+				}
+			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
