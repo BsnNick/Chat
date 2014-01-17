@@ -11,6 +11,7 @@ import lilypad.client.connect.api.request.impl.GetWhoamiRequest;
 import lilypad.client.connect.api.request.impl.MessageRequest;
 import me.SgtMjrME.Channels.BaseChannel;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
@@ -22,17 +23,25 @@ public class LilyPadHandler implements MessageEventListener{
 	String whoAmI = "";
 	List<String> servers;
 
-	public LilyPadHandler(RCChat rcChat, List<String> ser) {
+	public LilyPadHandler(RCChat rcChat, List<String> ser, final String whoami) {
 		rcchat = rcChat;
 		servers = ser;
 		//Does this need to be this long? Probably not, but that's what the plugin I looked at needed. 
 		c = (Connect)((Plugin) rcchat.getServer().getPluginManager().getPlugin("LilyPad-Connect")).getServer().getServicesManager().getRegistration(Connect.class).getProvider();
-		try {
-			whoAmI = c.request(new GetWhoamiRequest()).await().getIdentification();
-		} catch (RequestException | InterruptedException e) {
-			e.printStackTrace();
-		}
 		c.registerMessageEventListener(this);
+		Bukkit.getScheduler().runTaskLater(rcchat, new Runnable(){
+			@Override
+			public void run() {
+				if (whoami == null)
+					try {
+						whoAmI = c.request(new GetWhoamiRequest()).await().getIdentification();
+					} catch (InterruptedException | RequestException e) {
+						whoAmI = whoami;
+					}
+				else whoAmI = whoami;
+				servers.remove(whoami); //Remove this server if they accidentally included it (No double-messaging!)
+			}
+		}, 200L);
 	}
 	
 	public void sendMessage(BaseChannel channel, String message){
@@ -47,8 +56,12 @@ public class LilyPadHandler implements MessageEventListener{
 	@Override
 	public void onMessage(Connect c, MessageEvent mes) {
 		if (!mes.getChannel().contains("rcchat")) return;
-		String[] parts = mes.getChannel().split(".");
-		if (parts.length != 3) rcchat.getLogger().severe("[RCCHAT] Could not read channel information");
+		String[] parts = mes.getChannel().split("\\.");
+		if (parts.length != 3){
+			rcchat.getLogger().severe("[RCCHAT] Could not read channel information, channel was " + mes.getChannel()
+					);
+			return;
+		}
 		Perm perm;
 		for(Player p : rcchat.getServer().getOnlinePlayers()){
 			perm = RCChat.getPerm(p);
@@ -59,6 +72,10 @@ public class LilyPadHandler implements MessageEventListener{
 				e.printStackTrace();
 			}
 		}
+	}
+
+	public void deregister() {
+		this.deregister();
 	}
 
 

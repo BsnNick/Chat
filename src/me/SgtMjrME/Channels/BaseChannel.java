@@ -84,26 +84,32 @@ public abstract class BaseChannel {
 			if (!p.getName().equals(pl.getName())) pl.sendMessage(debugMes);
 		}
 		if (this.isCrossServer && RCChat.lph != null){
-			RCChat.lph.sendMessage(this, e.getFormat().replace("%1$s", p.getName()) + e.getMessage());
+			RCChat.lph.sendMessage(this, e.getFormat().replace("%1$s", p.getDisplayName()).replace("%2$s", e.getMessage()));
 		}
 	}
 
 	// Sends the message out
 	public void sendMessage(AsyncPlayerChatEvent e) {
-		if (RCChat.instance.pm.isPluginEnabled("RCWars") && this instanceof RaceChat){
+		if (!RCChat.instance.pm.isPluginEnabled("RCWars") && this instanceof RaceChat){
 			e.getPlayer().sendMessage(ChatColor.RED + "You are not in Wars");
 			e.getRecipients().clear();
 			e.setCancelled(true);
 			return;
 		}
-		if (RCChat.instance.pm.isPluginEnabled("Factions") && this instanceof FactionChat){
+		if (!RCChat.instance.pm.isPluginEnabled("Factions") && this instanceof FactionChat){
 			e.getPlayer().sendMessage(ChatColor.RED + "You are not in Factions");
 			e.getRecipients().clear();
 			e.setCancelled(true);
 			return;
 		}
-		if (RCChat.instance.pm.isPluginEnabled("Towny") && (this instanceof TownyChat || this instanceof NationChat)){
+		if (!RCChat.instance.pm.isPluginEnabled("Towny") && (this instanceof TownyChat || this instanceof NationChat)){
 			e.getPlayer().sendMessage(ChatColor.RED + "You are not in Towny");
+			e.getRecipients().clear();
+			e.setCancelled(true);
+			return;
+		}
+		if (!RCChat.instance.pm.isPluginEnabled("SimpleClans") && (this instanceof ClanChat)){
+			e.getPlayer().sendMessage(ChatColor.RED + "You are not in a Clan server");
 			e.getRecipients().clear();
 			e.setCancelled(true);
 			return;
@@ -189,6 +195,7 @@ public abstract class BaseChannel {
 		else if (RCChat.townyWorld != null && Util.inTowny(p) && useTag){
 			s = TownyHelper.format(s, p);
 		}
+		else if (ClanHelper.active) s = ClanHelper.format(s, p);
 //		if (Channel.get("fc") != null){
 //			if (RCChat.factionWorld != null){
 //				FPlayer fp = FPlayers.i.get(p);

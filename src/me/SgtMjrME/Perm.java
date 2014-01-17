@@ -6,7 +6,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 public class Perm {
-	ArrayList<Boolean> perms = new ArrayList<Boolean>(24);
+	ArrayList<Boolean> perms = new ArrayList<Boolean>(25);
 
 	public Perm(Player p) {
 		// What I have to do just to make concurrent permissions checks...
@@ -34,6 +34,7 @@ public class Perm {
 		this.perms.add(p.hasPermission("rcchat.fcsee"));// 21
 		this.perms.add(p.hasPermission("rcchat.tc"));// 22
 		this.perms.add(p.hasPermission("rcchat.tcsee"));// 23
+		this.perms.add(p.hasPermission("rcchat.cl"));//24 - Screw it, only 1 perm for you.
 	}
 
 	public boolean hasPerm(int i) {
@@ -61,5 +62,6 @@ public class Perm {
 		p.sendMessage(perms.get(12) ? ChatColor.GREEN + "Exempt" : ChatColor.RED + "Exempt");
 		p.sendMessage(perms.get(13) ? ChatColor.GREEN + "Mute" : ChatColor.RED + "Mute");
 		p.sendMessage(perms.get(20) ? ChatColor.GREEN + "Faction" : ChatColor.RED + "Faction");
+		p.sendMessage(perms.get(24) ? ChatColor.GREEN + "Clan" : ChatColor.RED + "Clan");
 	}
 }

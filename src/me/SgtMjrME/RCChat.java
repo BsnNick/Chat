@@ -74,7 +74,7 @@ public class RCChat extends JavaPlugin {
 					for(String s : str){
 						servers.add(s);
 					}
-					lph = new LilyPadHandler(this, servers);
+					lph = new LilyPadHandler(this, servers, config.getString("curServer", null));
 				}
 			}
 		} catch (FileNotFoundException e) {
@@ -131,6 +131,13 @@ public class RCChat extends JavaPlugin {
 			Bukkit.getLogger().severe("[RCCHAT] Could not load jail location! If there is no jail, ignore this message");
 			jailLL = null;
 			jailUR = null;
+		}
+	}
+	
+	@Override
+	public void onDisable(){
+		if (lph != null){
+			lph.deregister();
 		}
 	}
 	

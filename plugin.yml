@@ -1,9 +1,9 @@
 name: RCChatVIP
 author: SgtMjrME
 main: me.SgtMjrME.RCChat
-version: 1.6
+version: 1.7
 description: Chat!!
-softdepend: [RCWars, Essentials, Factions, Towny, LilyPad-Connect]
+softdepend: [RCWars, Essentials, Factions, Towny, LilyPad-Connect, Simple Clans]
 
 commands:
     onlinestaff:
@@ -38,6 +38,10 @@ commands:
         description: Jail Chat (I keep forgetting these!)
     chatperms:
     setjailarea:
+    cl:
+        description: Clan chat (F*** you, it's cl (Simple Clans)
+    ac:
+        description: ally chat
 permissions:
     rcchat.*:
         children:
@@ -97,4 +101,6 @@ permissions:
             rcchat.seeperms:
                 default: true
             rcchat.tcsee:
+                default: true
+            rcchat.cl:
                 default: true

@@ -56,5 +56,9 @@ public class Channel {
 				e.printStackTrace();
 			}
 		}
+		if (pl.getServer().getPluginManager().isPluginEnabled("SimpleClans")){
+			channels.putIfAbsent("cl", new ClanChat(pl));
+			channels.putIfAbsent("ac", new AllyChat(pl));
+		}
 	}
 }
