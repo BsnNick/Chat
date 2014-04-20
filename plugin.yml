@@ -42,6 +42,10 @@ commands:
         description: Clan chat (F*** you, it's cl (Simple Clans)
     ac:
         description: ally chat
+    msg:
+        description: Message
+    r:
+        description: reply
 permissions:
     rcchat.*:
         children:
@@ -103,4 +107,8 @@ permissions:
             rcchat.tcsee:
                 default: true
             rcchat.cl:
+                default: true
+            rcchat.msg:
+                default: true
+            rcchat.reply:
                 default: true

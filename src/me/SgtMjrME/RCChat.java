@@ -136,9 +136,9 @@ public class RCChat extends JavaPlugin {
 	
 	@Override
 	public void onDisable(){
-		if (lph != null){
-			lph.deregister();
-		}
+//		if (lph != null){
+//			lph.deregister();
+//		}
 	}
 	
 	public Location str2Loc(String s) {

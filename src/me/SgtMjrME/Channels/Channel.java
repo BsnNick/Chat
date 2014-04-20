@@ -42,6 +42,8 @@ public class Channel {
 		channels.putIfAbsent("m", new Mod(pl));
 		channels.putIfAbsent("me", new Me(pl));
 		channels.putIfAbsent("jc", new JailChat(pl));
+		channels.putIfAbsent("msg", new Message(pl));
+		channels.putIfAbsent("r", new Reply(pl));
 		if (pl.getServer().getPluginManager().isPluginEnabled("Factions")){
 			channels.putIfAbsent("fc", new FactionChat(pl));
 		}

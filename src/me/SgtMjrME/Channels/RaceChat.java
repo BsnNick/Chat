@@ -4,8 +4,8 @@ import java.util.Iterator;
 
 import me.SgtMjrME.Perm;
 import me.SgtMjrME.RCChat;
-import me.SgtMjrME.Object.Race;
-import me.SgtMjrME.Object.WarPlayers;
+import me.SgtMjrME.RCWars.Object.Race;
+import me.SgtMjrME.RCWars.Object.WarPlayers;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
