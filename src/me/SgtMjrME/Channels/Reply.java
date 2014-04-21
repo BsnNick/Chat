@@ -1,6 +1,9 @@
 package me.SgtMjrME.Channels;
 
+import java.util.List;
+
 import me.SgtMjrME.LilyPadHandler;
+import me.SgtMjrME.Pair;
 import me.SgtMjrME.Perm;
 import me.SgtMjrME.RCChat;
 
@@ -19,7 +22,7 @@ public class Reply extends BaseChannel {
 	void getDestination(AsyncPlayerChatEvent e) {
 		//This class will differ from other basechannels in that it does NOT call to receiveDestination
 		e.getRecipients().clear();
-		e.setCancelled(true);
+//		e.setCancelled(true);
 		
 		Player p = e.getPlayer();
 		
@@ -39,35 +42,52 @@ public class Reply extends BaseChannel {
 			Player targetPlayer = Bukkit.getPlayer(target);
 			if (targetPlayer == null){
 				//Player not on this server - try other servers
-				String server = LilyPadHandler.findServer(target);
+				if (RCChat.lph == null){
+					e.getPlayer().sendMessage(ChatColor.RED + "Player not found"); 
+					e.setCancelled(true);
+					return; //No other servers can exist
+				}
+				String server = null;
+				List<Pair> poss = LilyPadHandler.findServer(target);
+				if (poss.size() == 1){
+					//There is an exact match, or only 1 match - message should work
+					server = poss.get(0).server;
+				} else if (poss.size() > 1){
+					p.sendMessage(ChatColor.RED + "Player not found - did you mean:");
+					for(Pair pair : poss){
+						p.sendMessage(ChatColor.RED + "(" + pair.server + ") " + pair.player);
+					}
+				}
 				if (server == null){
 					//Player not on any server, or hasn't reloaded them yet
-					e.getPlayer().sendMessage(ChatColor.RED + "Player not found"); 
+					e.getPlayer().sendMessage(ChatColor.RED + "Player not found on any server"); 
+					e.setCancelled(true);
 					return;
 				}
 				send(e,server,target);
 			} else {
 				//Player found!
-				alterMessageMsg(e);
+				alterMessageMsg(e,targetPlayer.getDisplayName());
 				e.getRecipients().add(targetPlayer);
+				Message.pReply.put(target, p.getName());
 			}
 		}
+		p.sendMessage(e.getFormat()
+				.replace("%2$s", e.getMessage()));
 		Message.pReply.put(p.getName(), target);
 	}
 	
-	private void alterMessageMsg(AsyncPlayerChatEvent e){
-		e.setMessage(e.getMessage().substring(e.getMessage().trim().indexOf(" ")));
+	private void alterMessageMsg(AsyncPlayerChatEvent e, String tar){
+		e.setFormat(e.getFormat().replace("%1$s", e.getPlayer().getDisplayName() + "->" + tar));
 		alterMessage(e);
 	}
 
 	private void send(AsyncPlayerChatEvent e, String server, String player) {
-		alterMessageMsg(e);
-		e.setMessage(ChatColor.translateAlternateColorCodes('&', 
-				e.getFormat()
-				.replace("%1$s", e.getPlayer().getDisplayName())
-				.replace("%2$s", e.getMessage())));
+		alterMessageMsg(e,player);
+		e.setMessage(e.getFormat()
+				.replace("%2$s", e.getMessage()));
 		if (RCChat.lph != null){
-			RCChat.lph.sendMessage("rcchat.msg." + player + "," + e.getPlayer().getName(), e.getMessage(), server);
+			RCChat.lph.sendMessage("rcchat.msg." + player + "," + e.getPlayer().getDisplayName(), e.getMessage(), server);
 		}
 	}
 

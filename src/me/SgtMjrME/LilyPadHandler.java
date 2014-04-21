@@ -137,11 +137,28 @@ public class LilyPadHandler implements Runnable{
 		}
 	}
 
-	public static String findServer(String string) {
+	/**
+	 * Returns a list of all players who match given string in all servers
+	 * @param string
+	 * @return
+	 */
+	public static List<Pair> findServer(String string) {
+		List<Pair> possibilities = new ArrayList<Pair>();
 		for(String s : servers.keySet()){
-			if (servers.get(s).contains(string)) return s;
+			for(String p : servers.get(s)){
+				if (p.equals(string)){
+					//Exact match, send it through immediately
+					possibilities.clear();
+					possibilities.add(new Pair(s,p));
+					return possibilities;
+				}
+				if (p.contains(string)){
+					//Contains some part - this the person they wanted?
+					possibilities.add(new Pair(s,p));
+				}
+			}
 		}
-		return null;
+		return possibilities;
 	}
 
 }
