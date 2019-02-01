@@ -1,9 +1,9 @@
 package me.SgtMjrME.Channels;
 
-import java.util.Iterator;
-
 import me.SgtMjrME.Perm;
 import me.SgtMjrME.RCChat;
+
+import java.util.Iterator;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.AsyncPlayerChatEvent;

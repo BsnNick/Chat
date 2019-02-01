@@ -9,9 +9,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
-import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
-import com.palmergames.bukkit.towny.object.TownyUniverse;
-
 public class TownyChat extends BaseChannel {
 
 	public TownyChat(RCChat pl) {
@@ -33,34 +30,6 @@ public class TownyChat extends BaseChannel {
 
 	@Override
 	void getDestination(AsyncPlayerChatEvent e) {
-		// First, check if player has perms
-		Player p = e.getPlayer();
-		Perm perm = RCChat.getPerm(p);
-		if (!perm.hasPerm(22)) {
-			p.sendMessage(getPermErr());
-			e.getRecipients().clear();
-			e.setCancelled(true);
-			return;
-		}
-
-		e.getRecipients().clear();
-		try {
-			 e.getRecipients().addAll(TownyUniverse.getOnlinePlayers(
-					TownyUniverse.getDataSource().getResident(p.getName()).getTown()));
-		} catch (NotRegisteredException ex) {
-			p.sendMessage(ChatColor.RED + "Error displaying message, Towny Town not found");
-			return;
-		}
-		
-
-		// Remove non-permission
-		Iterator<Player> i = e.getRecipients().iterator();
-		while (i.hasNext()) {
-			if (!RCChat.getPerm(i.next()).hasPerm(23))
-				i.remove();
-		}
-		// send
-		receiveDestination(e);
 	}
 
 	@Override

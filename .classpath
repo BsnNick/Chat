@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
-	<classpathentry kind="lib" path="C:/Programming/Minecraft/Dependancies/bukkit-1.5.1-R0.2.jar"/>
-	<classpathentry kind="lib" path="C:/Programming/Minecraft/Dependancies/RCGuilds.jar"/>
-	<classpathentry kind="lib" path="C:/Programming/Minecraft/Dependancies/Factions.jar"/>
-	<classpathentry kind="lib" path="C:/Programming/Minecraft/Dependancies/Essentials.jar"/>
-	<classpathentry kind="lib" path="C:/Programming/Minecraft/Dependancies/Towny.jar"/>
-	<classpathentry kind="lib" path="C:/Programming/Minecraft/Dependancies/Bukkit-Connect.jar"/>
-	<classpathentry kind="lib" path="C:/Programming/Minecraft/Dependancies/RCWars.jar"/>
-	<classpathentry kind="lib" path="C:/Programming/Minecraft/Dependancies/SimpleClans-Legacy.jar"/>
+	<classpathentry kind="lib" path="D:/Workspace/Eclipse/Main/Dependencies/RCWars.jar"/>
+	<classpathentry kind="lib" path="D:/Workspace/Dependencies/Spigot/Essentials-2.x-SNAPSHOT-#30.jar"/>
+	<classpathentry kind="lib" path="D:/Workspace/Dependencies/Spigot/ProtocolLib-1.13.jar"/>
+	<classpathentry kind="lib" path="D:/Workspace/Dependencies/Spigot/spigot-1.13.2.jar"/>
+	<classpathentry kind="lib" path="D:/Workspace/Dependencies/Spigot/Vault-1.13.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
